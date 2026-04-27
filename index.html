@@ -22,6 +22,7 @@
         <div class="brand">Open Source Repository Intelligence</div>
         <div class="nav-links">
           <a href="#overview">Overview</a>
+          <a href="#sources">Sources</a>
           <a href="#dashboard">Dashboard</a>
           <a href="#model">Data Model</a>
           <a href="#deliverables">Deliverables</a>
@@ -81,8 +82,8 @@
           <article class="feature-card">
             <h3>Interactive Dashboard</h3>
             <p>
-              Shows KPI cards, rankings, distributions, and a repository explorer
-              built from the full repository metadata source.
+              Shows KPI cards, rankings, distributions, and filtered repository
+              highlights built from the full repository metadata source.
             </p>
           </article>
           <article class="feature-card">
@@ -90,6 +91,37 @@
             <p>
               Shows the schema design, the main findings, and links to the SQL
               scripts and supporting project files.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="sources">
+        <div class="section-heading">
+          <p class="eyebrow">Sources</p>
+          <h2>What data is used where</h2>
+        </div>
+        <div class="feature-grid">
+          <article class="feature-card">
+            <h3>Website dashboard</h3>
+            <p>
+              The built-in dashboard uses the full repository metadata source with
+              14,644 repositories.
+            </p>
+          </article>
+          <article class="feature-card">
+            <h3>Database project</h3>
+            <p>
+              The relational schema uses both repository metadata and GitHub users
+              data to demonstrate normalization, joins, and source limitations.
+            </p>
+          </article>
+          <article class="feature-card">
+            <h3>Important limitation</h3>
+            <p>
+              Only about 200 repositories match the separate users file, so the
+              website focuses on repository-wide analytics rather than merged
+              profile-level coverage.
             </p>
           </article>
         </div>
@@ -153,17 +185,33 @@
         <div class="viz-grid viz-grid-bottom">
           <article class="panel panel-wide">
             <div class="panel-head">
-              <h3>Repository Scatter: Stars vs Forks</h3>
-              <span class="panel-subtitle">Bubble size represents commit count</span>
+              <h3>Repository Lifecycle Buckets</h3>
+              <span class="panel-subtitle">How long repositories stay active</span>
             </div>
-            <div class="scatter-shell">
-              <svg id="scatter-plot" viewBox="0 0 560 320" aria-label="Scatter plot"></svg>
-            </div>
+            <div id="lifecycle-chart" class="bar-chart"></div>
           </article>
 
           <article class="panel">
             <div class="panel-head">
-              <h3>Longest Active Repositories</h3>
+              <h3>README Coverage</h3>
+            </div>
+            <div id="readme-summary" class="metric-stack"></div>
+          </article>
+        </div>
+
+        <div class="viz-grid">
+          <article class="panel">
+            <div class="panel-head">
+              <h3>Community Health Bands</h3>
+              <span class="panel-subtitle">Repository counts by health score</span>
+            </div>
+            <div id="health-chart" class="bar-chart compact-chart"></div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-head">
+              <h3>Top Active Repositories</h3>
+              <span class="panel-subtitle">Longest-lived repositories in current view</span>
             </div>
             <div id="lifespan-chart" class="bar-chart compact-chart"></div>
           </article>
@@ -171,8 +219,8 @@
 
         <article class="panel table-panel">
           <div class="panel-head">
-            <h3>Repository Explorer</h3>
-            <span class="panel-subtitle">Filtered detail table</span>
+            <h3>Repository Spotlight</h3>
+            <span class="panel-subtitle">Top 12 filtered repositories only</span>
           </div>
           <div class="table-wrap">
             <table>
@@ -259,6 +307,43 @@
             <p>
               The impact tier breakdown shows a long tail of repositories with low
               visibility and only a few standout projects.
+            </p>
+          </article>
+          <article class="feature-card">
+            <h3>README usage is high</h3>
+            <p>
+              README coverage is strong in the repository source, which helps explain
+              why many projects still look documented even when their engagement is low.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="implementation">
+        <div class="section-heading">
+          <p class="eyebrow">Implementation</p>
+          <h2>How the built-in BI works</h2>
+        </div>
+        <div class="feature-grid">
+          <article class="feature-card">
+            <h3>What it is</h3>
+            <p>
+              This is not actual Power BI embedded in the page. It is a custom web
+              dashboard built with HTML, CSS, JavaScript, and a JSON data file.
+            </p>
+          </article>
+          <article class="feature-card">
+            <h3>Why use it</h3>
+            <p>
+              It makes the website self-contained, so visitors can explore the
+              results without leaving the page or needing a published BI link.
+            </p>
+          </article>
+          <article class="feature-card">
+            <h3>Power BI still fits</h3>
+            <p>
+              You can still build a formal Power BI version separately for class,
+              interviews, or portfolio comparison using the same cleaned dataset.
             </p>
           </article>
         </div>

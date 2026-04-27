@@ -133,6 +133,70 @@ function renderLifespanChart(rows) {
   renderBarChart("lifespan-chart", data, "activeDays", (item) => item.repo);
 }
 
+function renderLifecycleChart(rows) {
+  const buckets = [
+    { label: "0-30 days", count: 0 },
+    { label: "31-180 days", count: 0 },
+    { label: "181-365 days", count: 0 },
+    { label: "1-3 years", count: 0 },
+    { label: "3+ years", count: 0 }
+  ];
+
+  rows.forEach((row) => {
+    const days = row.activeDays;
+    if (days <= 30) buckets[0].count += 1;
+    else if (days <= 180) buckets[1].count += 1;
+    else if (days <= 365) buckets[2].count += 1;
+    else if (days <= 1095) buckets[3].count += 1;
+    else buckets[4].count += 1;
+  });
+
+  renderBarChart("lifecycle-chart", buckets, "count", (item) => item.label);
+}
+
+function renderReadmeSummary(rows) {
+  const withReadme = rows.filter((row) => row.hasReadme === 1).length;
+  const withoutReadme = rows.length - withReadme;
+  const coverage = rows.length ? Math.round((withReadme / rows.length) * 100) : 0;
+
+  const container = document.getElementById("readme-summary");
+  container.innerHTML = `
+    <div class="metric-card">
+      <span>With README</span>
+      <strong>${formatNumber(withReadme)}</strong>
+    </div>
+    <div class="metric-card">
+      <span>Without README</span>
+      <strong>${formatNumber(withoutReadme)}</strong>
+    </div>
+    <div class="metric-card">
+      <span>Coverage Rate</span>
+      <strong>${coverage}%</strong>
+    </div>
+  `;
+}
+
+function renderHealthChart(rows) {
+  const bands = [
+    { label: "0", count: 0 },
+    { label: "1-25", count: 0 },
+    { label: "26-50", count: 0 },
+    { label: "51-75", count: 0 },
+    { label: "76-100", count: 0 }
+  ];
+
+  rows.forEach((row) => {
+    const score = row.communityHealth;
+    if (score === 0) bands[0].count += 1;
+    else if (score <= 25) bands[1].count += 1;
+    else if (score <= 50) bands[2].count += 1;
+    else if (score <= 75) bands[3].count += 1;
+    else bands[4].count += 1;
+  });
+
+  renderBarChart("health-chart", bands, "count", (item) => item.label);
+}
+
 function renderImpactDonut(rows) {
   const counts = rows.reduce(
     (acc, row) => {
@@ -175,45 +239,6 @@ function renderImpactDonut(rows) {
   });
 }
 
-function renderScatter(rows) {
-  const svg = document.getElementById("scatter-plot");
-  const width = 560;
-  const height = 320;
-  const padding = 36;
-  const maxForks = Math.max(...rows.map((r) => r.forks), 1);
-  const maxStars = Math.max(...rows.map((r) => r.stars), 1);
-  const maxCommits = Math.max(...rows.map((r) => r.commits), 1);
-
-  const colorMap = {
-    Python: "#12343b",
-    SQL: "#c65d26",
-    R: "#4b6a88",
-    JavaScript: "#8a3f17"
-  };
-
-  const circles = rows
-    .slice(0, 18)
-    .map((row) => {
-      const x = padding + (row.forks / maxForks) * (width - padding * 2);
-      const y = height - padding - (row.stars / maxStars) * (height - padding * 2);
-      const radius = 6 + (row.commits / maxCommits) * 10;
-      return `
-        <circle cx="${x}" cy="${y}" r="${radius}" fill="${colorMap[row.language] || "#59636e"}" opacity="0.78">
-          <title>${row.repo} | ${row.language} | Stars ${row.stars} | Forks ${row.forks} | Commits ${row.commits}</title>
-        </circle>
-      `;
-    })
-    .join("");
-
-  svg.innerHTML = `
-    <line x1="${padding}" y1="${height - padding}" x2="${width - padding}" y2="${height - padding}" stroke="#59636e" stroke-width="1.2"></line>
-    <line x1="${padding}" y1="${padding}" x2="${padding}" y2="${height - padding}" stroke="#59636e" stroke-width="1.2"></line>
-    <text x="${width - padding}" y="${height - 10}" text-anchor="end" fill="#59636e" font-size="12">Forks</text>
-    <text x="18" y="${padding}" fill="#59636e" font-size="12">Stars</text>
-    ${circles}
-  `;
-}
-
 function renderTable(rows) {
   const body = document.getElementById("repo-table-body");
   body.innerHTML = "";
@@ -221,6 +246,7 @@ function renderTable(rows) {
   rows
     .slice()
     .sort((a, b) => b.stars - a.stars || b.commits - a.commits)
+    .slice(0, 12)
     .forEach((row) => {
       const tr = document.createElement("tr");
       tr.innerHTML = `
@@ -244,9 +270,11 @@ function renderDashboard() {
   renderTopRepos(rows);
   renderDeveloperChart(rows);
   renderLanguageChart();
+  renderLifecycleChart(rows);
+  renderReadmeSummary(rows);
+  renderHealthChart(rows);
   renderLifespanChart(rows);
   renderImpactDonut(rows);
-  renderScatter(rows);
   renderTable(rows);
 }
 
