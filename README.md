@@ -6,7 +6,7 @@ Portfolio-ready analytics project built on public open-source repository and dev
 
 This repo is structured to present the project as a polished portfolio piece instead of a class submission. It includes:
 
-- A public-facing project website in [index.html](/Users/xixi/Documents/New%20project/index.html)
+- A public-facing project website in [index.html](./index.html)
 - SQL schema and analytics queries in `sql/`
 - Documentation for building and embedding a Power BI dashboard in `docs/powerbi-build-guide.md`
 - A detailed Power BI storyboard in `docs/powerbi-report-blueprint.md`

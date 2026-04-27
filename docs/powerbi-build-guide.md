@@ -94,7 +94,7 @@ JOIN languages l ON r.language_id = l.language_id
 JOIN repository_metrics m ON r.repo_id = m.repo_id;
 ```
 
-Use [powerbi-report-blueprint.md](/Users/xixi/Documents/New%20project/docs/powerbi-report-blueprint.md) as the exact layout storyboard and [assets/powerbi-theme.json](/Users/xixi/Documents/New%20project/assets/powerbi-theme.json) as your starting theme.
+Use [powerbi-report-blueprint.md](./powerbi-report-blueprint.md) as the exact layout storyboard and [powerbi-theme.json](../assets/powerbi-theme.json) as your starting theme.
 
 ## Recommended visuals
 
