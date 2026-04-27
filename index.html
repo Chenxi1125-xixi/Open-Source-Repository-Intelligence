@@ -24,6 +24,7 @@
           <a href="#overview">Overview</a>
           <a href="#sources">Sources</a>
           <a href="#dashboard">Dashboard</a>
+          <a href="#powerbi-version">Power BI</a>
           <a href="#model">Data Model</a>
           <a href="#deliverables">Deliverables</a>
         </div>
@@ -41,7 +42,7 @@
           </p>
           <div class="cta-row">
             <a class="button primary" href="#dashboard">Open Dashboard</a>
-            <a class="button secondary" href="#deliverables">View Files</a>
+            <a class="button secondary" href="#powerbi-version">Power BI Version</a>
           </div>
         </div>
 
@@ -58,8 +59,8 @@
           </div>
           <div class="status-card">
             <span class="status-label">Optional future upgrade</span>
-            <strong>Add a Power BI embed later</strong>
-            <p>You can still publish a Power BI version later, but the website already works on its own.</p>
+            <strong>Offer both BI versions</strong>
+            <p>The website can keep its built-in dashboard while also linking to a formal Power BI report for class or interview use.</p>
           </div>
         </aside>
       </section>
@@ -139,12 +140,51 @@
           </p>
         </div>
 
+        <div class="dashboard-intro">
+          <article class="feature-card">
+            <h3>What this section does</h3>
+            <p>
+              This is the analytical core of the project. It combines KPI cards,
+              distribution views, concentration analysis, lifecycle patterns, and a
+              filtered repository spotlight.
+            </p>
+          </article>
+          <article class="feature-card">
+            <h3>How to use the filters</h3>
+            <p>
+              First choose a language or leave it on <code>All</code>. Then apply an
+              impact filter if you want to focus on early-stage or high-visibility
+              repositories. All charts update together.
+            </p>
+          </article>
+          <article class="feature-card">
+            <h3>What to look for</h3>
+            <p>
+              Pay attention to concentration of stars, language dominance, README
+              coverage, and how long active repositories tend to survive.
+            </p>
+          </article>
+        </div>
+
         <div class="filter-bar">
-          <div class="filter-group" id="language-filters"></div>
-          <div class="filter-group" id="impact-filters"></div>
+          <div class="filter-block">
+            <span class="filter-label">Language Filter</span>
+            <div class="filter-group" id="language-filters"></div>
+          </div>
+          <div class="filter-block">
+            <span class="filter-label">Impact Filter</span>
+            <div class="filter-group" id="impact-filters"></div>
+          </div>
+          <div class="filter-block filter-status">
+            <span class="filter-label">Current View</span>
+            <div id="filter-summary" class="filter-summary"></div>
+            <button id="reset-filters" class="filter-chip reset-chip" type="button">Reset Filters</button>
+          </div>
         </div>
 
         <div class="kpi-grid" id="kpi-grid"></div>
+
+        <div class="insight-summary" id="insight-summary"></div>
 
         <div class="viz-grid viz-grid-top">
           <article class="panel panel-wide">
@@ -176,9 +216,27 @@
 
           <article class="panel">
             <div class="panel-head">
-              <h3>Top Developers by Total Stars</h3>
+              <h3>Top Owners by Total Stars</h3>
             </div>
             <div id="developer-chart" class="bar-chart compact-chart"></div>
+          </article>
+        </div>
+
+        <div class="viz-grid">
+          <article class="panel">
+            <div class="panel-head">
+              <h3>Star Count Buckets</h3>
+              <span class="panel-subtitle">How visible repositories are</span>
+            </div>
+            <div id="stars-bucket-chart" class="bar-chart compact-chart"></div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-head">
+              <h3>Top Owners by Repository Count</h3>
+              <span class="panel-subtitle">Who publishes the most repositories</span>
+            </div>
+            <div id="owner-volume-chart" class="bar-chart compact-chart"></div>
           </article>
         </div>
 
@@ -240,6 +298,44 @@
             </table>
           </div>
         </article>
+      </section>
+
+      <section class="section" id="powerbi-version">
+        <div class="section-heading split">
+          <div>
+            <p class="eyebrow">Alternate BI Version</p>
+            <h2>Formal Power BI report</h2>
+          </div>
+          <p class="section-note">
+            Use this as the polished BI companion to the built-in web dashboard.
+          </p>
+        </div>
+        <div class="feature-grid">
+          <article class="feature-card">
+            <h3>Why keep both</h3>
+            <p>
+              The built-in dashboard makes the website self-contained, while the
+              Power BI version gives you a standard BI tool deliverable for class,
+              interviews, or portfolio comparison.
+            </p>
+          </article>
+          <article class="feature-card">
+            <h3>What to use in Power BI</h3>
+            <p>
+              Build the report from
+              <a href="data/repository_dashboard_full.csv">data/repository_dashboard_full.csv</a>
+              and follow
+              <a href="docs/powerbi-quickstart.md">docs/powerbi-quickstart.md</a>.
+            </p>
+          </article>
+          <article class="feature-card">
+            <h3>Report link</h3>
+            <p id="powerbi-link-slot">
+              Add your published Power BI URL in <code>app.js</code> and this section
+              will turn into a live link.
+            </p>
+          </article>
+        </div>
       </section>
 
       <section class="section" id="model">
@@ -344,6 +440,36 @@
             <p>
               You can still build a formal Power BI version separately for class,
               interviews, or portfolio comparison using the same cleaned dataset.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="powerbi-plan">
+        <div class="section-heading">
+          <p class="eyebrow">Power BI Build</p>
+          <h2>What the formal Power BI version should include</h2>
+        </div>
+        <div class="feature-grid">
+          <article class="feature-card">
+            <h3>Page 1: Executive Overview</h3>
+            <p>
+              KPI cards, top repositories, top owners, language mix, and impact
+              tier distribution from the full repository dataset.
+            </p>
+          </article>
+          <article class="feature-card">
+            <h3>Page 2: Repository Quality and Lifecycle</h3>
+            <p>
+              Lifecycle buckets, README coverage, community health bands, and a
+              repository detail table.
+            </p>
+          </article>
+          <article class="feature-card">
+            <h3>Page 3: Methodology and Data Limits</h3>
+            <p>
+              Explain the two-source design, the low cross-source match rate, and
+              why the main BI layer uses the full repository metadata source.
             </p>
           </article>
         </div>

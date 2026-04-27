@@ -1,6 +1,7 @@
 let repositoryData = [];
 let languageOptions = ["All"];
 let impactOptions = ["All"];
+const powerBiReportUrl = "";
 
 const state = {
   language: "All",
@@ -8,6 +9,19 @@ const state = {
 };
 
 const formatNumber = (value) => new Intl.NumberFormat("en-US").format(value);
+
+function renderPowerBiLink() {
+  const slot = document.getElementById("powerbi-link-slot");
+  if (!slot) return;
+
+  if (powerBiReportUrl.trim()) {
+    slot.innerHTML = `
+      <a class="button primary" href="${powerBiReportUrl}" target="_blank" rel="noreferrer">
+        Open Published Power BI Report
+      </a>
+    `;
+  }
+}
 
 function filteredRepos() {
   return repositoryData.filter((repo) => {
@@ -41,18 +55,41 @@ function renderFilters() {
     state.impact = option;
     renderDashboard();
   });
+
+  const summary = document.getElementById("filter-summary");
+  if (summary) {
+    summary.textContent = `${state.language} · ${state.impact}`;
+  }
+
+  const resetButton = document.getElementById("reset-filters");
+  if (resetButton && !resetButton.dataset.bound) {
+    resetButton.dataset.bound = "true";
+    resetButton.addEventListener("click", () => {
+      state.language = "All";
+      state.impact = "All";
+      renderDashboard();
+    });
+  }
 }
 
 function renderKpis(rows) {
   const developers = new Set(rows.map((row) => row.owner)).size;
   const stars = rows.reduce((sum, row) => sum + row.stars, 0);
+  const forks = rows.reduce((sum, row) => sum + row.forks, 0);
   const commits = rows.reduce((sum, row) => sum + row.commits, 0);
+  const readmeCoverage = rows.length
+    ? Math.round((rows.filter((row) => row.hasReadme === 1).length / rows.length) * 100)
+    : 0;
+  const averageStars = rows.length ? (stars / rows.length).toFixed(1) : "0.0";
 
   const items = [
     { label: "Repositories in View", value: rows.length },
-    { label: "Developers in View", value: developers },
+    { label: "Owners in View", value: developers },
     { label: "Stars in View", value: stars },
-    { label: "Commits in View", value: commits }
+    { label: "Forks in View", value: forks },
+    { label: "Commits in View", value: commits },
+    { label: "README Coverage", value: `${readmeCoverage}%` },
+    { label: "Average Stars per Repo", value: averageStars }
   ];
 
   const grid = document.getElementById("kpi-grid");
@@ -61,7 +98,8 @@ function renderKpis(rows) {
   items.forEach((item) => {
     const card = document.createElement("article");
     card.className = "kpi-card";
-    card.innerHTML = `<span>${item.label}</span><strong>${formatNumber(item.value)}</strong>`;
+    const value = typeof item.value === "number" ? formatNumber(item.value) : item.value;
+    card.innerHTML = `<span>${item.label}</span><strong>${value}</strong>`;
     grid.appendChild(card);
   });
 }
@@ -111,6 +149,21 @@ function renderDeveloperChart(rows) {
   renderBarChart("developer-chart", data, "stars", (item) => item.owner);
 }
 
+function renderOwnerVolumeChart(rows) {
+  const totals = new Map();
+  rows.forEach((row) => {
+    const current = totals.get(row.owner) || 0;
+    totals.set(row.owner, current + 1);
+  });
+
+  const data = [...totals.entries()]
+    .map(([owner, count]) => ({ owner, count }))
+    .sort((a, b) => b.count - a.count || a.owner.localeCompare(b.owner))
+    .slice(0, 6);
+
+  renderBarChart("owner-volume-chart", data, "count", (item) => item.owner);
+}
+
 function renderLanguageChart() {
   const counts = repositoryData.reduce((acc, row) => {
     acc[row.language] = (acc[row.language] || 0) + 1;
@@ -124,6 +177,27 @@ function renderLanguageChart() {
     .sort((a, b) => b.count - a.count)
     .slice(0, 6);
   renderBarChart("language-chart", data, "count", (item) => item.language);
+}
+
+function renderStarsBucketChart(rows) {
+  const buckets = [
+    { label: "0", count: 0 },
+    { label: "1-4", count: 0 },
+    { label: "5-19", count: 0 },
+    { label: "20-99", count: 0 },
+    { label: "100+", count: 0 }
+  ];
+
+  rows.forEach((row) => {
+    const stars = row.stars;
+    if (stars === 0) buckets[0].count += 1;
+    else if (stars <= 4) buckets[1].count += 1;
+    else if (stars <= 19) buckets[2].count += 1;
+    else if (stars <= 99) buckets[3].count += 1;
+    else buckets[4].count += 1;
+  });
+
+  renderBarChart("stars-bucket-chart", buckets, "count", (item) => item.label);
 }
 
 function renderLifespanChart(rows) {
@@ -250,7 +324,7 @@ function renderTable(rows) {
     .forEach((row) => {
       const tr = document.createElement("tr");
       tr.innerHTML = `
-        <td>${row.repo}</td>
+        <td><a href="${row.githubUrl}" target="_blank" rel="noreferrer">${row.repo}</a></td>
         <td>${row.owner}</td>
         <td>${row.language}</td>
         <td>${row.impact}</td>
@@ -263,18 +337,53 @@ function renderTable(rows) {
     });
 }
 
+function renderInsightSummary(rows) {
+  const box = document.getElementById("insight-summary");
+  if (!box) return;
+
+  const stars = rows.reduce((sum, row) => sum + row.stars, 0);
+  const topFiveStars = rows
+    .slice()
+    .sort((a, b) => b.stars - a.stars)
+    .slice(0, 5)
+    .reduce((sum, row) => sum + row.stars, 0);
+  const topShare = stars ? Math.round((topFiveStars / stars) * 100) : 0;
+  const pythonShare = rows.length
+    ? Math.round((rows.filter((row) => row.language === "Python").length / rows.length) * 100)
+    : 0;
+  const longLived = rows.filter((row) => row.activeDays > 365).length;
+
+  box.innerHTML = `
+    <article class="insight-note">
+      <span>Concentration</span>
+      <strong>${topShare}% of visible stars come from the top 5 repositories in the current view.</strong>
+    </article>
+    <article class="insight-note">
+      <span>Language dominance</span>
+      <strong>${pythonShare}% of repositories in the current view use Python.</strong>
+    </article>
+    <article class="insight-note">
+      <span>Lifecycle</span>
+      <strong>${formatNumber(longLived)} repositories in the current view stayed active for more than one year.</strong>
+    </article>
+  `;
+}
+
 function renderDashboard() {
   const rows = filteredRepos();
   renderFilters();
   renderKpis(rows);
   renderTopRepos(rows);
   renderDeveloperChart(rows);
+  renderOwnerVolumeChart(rows);
   renderLanguageChart();
+  renderStarsBucketChart(rows);
   renderLifecycleChart(rows);
   renderReadmeSummary(rows);
   renderHealthChart(rows);
   renderLifespanChart(rows);
   renderImpactDonut(rows);
+  renderInsightSummary(rows);
   renderTable(rows);
 }
 
@@ -299,6 +408,7 @@ function initializeData(rows) {
 
   languageOptions = ["All", ...languages];
   impactOptions = ["All", ...impacts];
+  renderPowerBiLink();
   renderDashboard();
 }
 
@@ -310,4 +420,5 @@ fetch("data/repository_dashboard_full.json")
     grid.innerHTML = '<article class="kpi-card"><span>Data Load Status</span><strong>Failed</strong></article>';
     document.getElementById("repo-table-body").innerHTML =
       '<tr><td colspan="8">The dashboard data file could not be loaded. Use GitHub Pages or run the local preview script.</td></tr>';
+    renderPowerBiLink();
   });
