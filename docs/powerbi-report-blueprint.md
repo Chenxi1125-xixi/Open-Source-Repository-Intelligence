@@ -4,7 +4,7 @@ This file is the exact storyboard for the report so you can build it fast and st
 
 ## Recommended report name
 
-`GitHub Open-Source Activity Analytics`
+`Open Source Repository Intelligence`
 
 ## Recommended report pages
 

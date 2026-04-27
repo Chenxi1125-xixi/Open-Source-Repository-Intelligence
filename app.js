@@ -18,7 +18,7 @@ if (powerBiEmbedUrl.trim()) {
   const shell = document.getElementById("powerbi-frame");
   shell.innerHTML = `
     <iframe
-      title="GitHub Open-Source Activity Analytics Power BI Report"
+      title="Open Source Repository Intelligence Power BI Report"
       src="${powerBiEmbedUrl}"
       allowfullscreen="true">
     </iframe>
