@@ -1,0 +1,22 @@
+repo,owner,language,company,stars,forks,commits,active_days,impact
+refarch-eda,ibm-cloud-architecture,SQL,IBM Cloud,111,66,683,1977,High Impact
+aws-remote-desktop-for-eda,aws-samples,JavaScript,Amazon Web Services,16,141,29,637,High Impact
+kinesis-data-analytics-stream-to-dynamodb,aws-samples,SQL,Amazon Web Services,2,3,6,162,Low Impact
+devday-mwaa-elt-workflows,aws-samples,Python,Amazon Web Services,2,0,3,4,Low Impact
+simpler_eda,UBC-MDS,Python,University of British Columbia,0,5,114,30,Early Stage
+pymleda,UBC-MDS,Python,University of British Columbia,0,1,141,29,Early Stage
+eda_utils_py,UBC-MDS,Python,University of British Columbia,0,4,225,25,Early Stage
+APSJ21G7_ZOMATO_DATA_ANALYSIS,prabhatdash,Python,Independent Developer,1,0,16,10,Low Impact
+APSJ20G2_SALES_DATA_ANALYSIS,prabhatdash,Python,Independent Developer,0,0,7,110,Early Stage
+APSJ21G3_EXAM_DATA_ANALYSIS,prabhatdash,Python,Independent Developer,0,0,14,7,Early Stage
+MS_DA-advanced_data_analytics,heathermrauch,R,Independent Developer,0,0,6,0,Early Stage
+MS_DA-data_mining_2,heathermrauch,R,Independent Developer,0,0,2,0,Early Stage
+MS_DA-data_mining_1,heathermrauch,R,Independent Developer,0,0,2,0,Early Stage
+data_analytics,krother,Python,Academis,0,0,2,0,Early Stage
+Spreadsheet_Tutorial,krother,R,Academis,0,0,10,2384,Early Stage
+refarch-eda-store-simulator,ibm-cloud-architecture,JavaScript,IBM Cloud,0,8,72,1441,Early Stage
+python-covid-data-analysis,johnehunt,Python,Independent Developer,1,0,2,108,Low Impact
+DataAnalysisProject,johnehunt,Python,Independent Developer,0,0,5,23,Early Stage
+asgmt-2-programming-and-data-analysis-2023,datainpoint,Python,Independent Developer,2,0,4,0,Low Impact
+asgmt-1-programming-and-data-analysis-2023,datainpoint,Python,Independent Developer,1,0,4,1,Low Impact
+final-programming-and-data-analysis-2023,datainpoint,Python,Independent Developer,1,0,3,3,Low Impact

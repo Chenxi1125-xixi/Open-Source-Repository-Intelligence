@@ -11,10 +11,12 @@ This repo is structured to present the project as a polished portfolio piece ins
 - Documentation for building and embedding a Power BI dashboard in `docs/powerbi-build-guide.md`
 - A detailed Power BI storyboard in `docs/powerbi-report-blueprint.md`
 - A field-by-field Power BI visual spec in `docs/powerbi-visual-spec.md`
+- A Power BI quickstart in `docs/powerbi-quickstart.md`
 - A GitHub Pages launch guide in `docs/github-pages-launch.md`
 - A data dictionary in `docs/data-dictionary.md`
 - An EER diagram in `assets/schema-diagram.png`
 - A Power BI theme file in `assets/powerbi-theme.json`
+- A sample BI dataset in `data/repository_dashboard_sample.csv`
 - A local preview script in `preview-site.sh`
 
 ## Recommended portfolio framing
