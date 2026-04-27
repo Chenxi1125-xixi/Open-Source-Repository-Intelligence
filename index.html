@@ -82,7 +82,7 @@
             <h3>Interactive Dashboard</h3>
             <p>
               Shows KPI cards, rankings, distributions, and a repository explorer
-              directly inside the website.
+              built from the full repository metadata source.
             </p>
           </article>
           <article class="feature-card">
@@ -102,8 +102,8 @@
             <h2>Interactive repository analytics</h2>
           </div>
           <p class="section-note">
-            Use the filters to switch the dashboard between all repositories and
-            language-specific views.
+            This dashboard is driven by the full Kaggle repository metadata file
+            with 14,644 repositories.
           </p>
         </div>
 
@@ -223,10 +223,11 @@
               </p>
             </article>
             <article class="feature-card">
-              <h3>SQL features used</h3>
+              <h3>Important source limitation</h3>
               <p>
-                The project uses joins, CTEs, window functions, aggregations, CASE
-                logic, and a reusable analysis view.
+                The repo metadata file has 14,644 repositories, but only about 200
+                repositories match the separate GitHub users file. Because of that,
+                the live dashboard focuses on the full repository source.
               </p>
             </article>
           </div>

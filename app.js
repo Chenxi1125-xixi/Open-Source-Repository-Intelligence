@@ -1,54 +1,11 @@
-const repositoryData = [
-  { repo: "refarch-eda", owner: "ibm-cloud-architecture", language: "SQL", company: "IBM Cloud", stars: 111, forks: 66, commits: 683, activeDays: 1977, impact: "High Impact" },
-  { repo: "aws-remote-desktop-for-eda", owner: "aws-samples", language: "JavaScript", company: "Amazon Web Services", stars: 16, forks: 141, commits: 29, activeDays: 637, impact: "High Impact" },
-  { repo: "kinesis-data-analytics-stream-to-dynamodb", owner: "aws-samples", language: "SQL", company: "Amazon Web Services", stars: 2, forks: 3, commits: 6, activeDays: 162, impact: "Low Impact" },
-  { repo: "devday-mwaa-elt-workflows", owner: "aws-samples", language: "Python", company: "Amazon Web Services", stars: 2, forks: 0, commits: 3, activeDays: 4, impact: "Low Impact" },
-  { repo: "simpler_eda", owner: "UBC-MDS", language: "Python", company: "University of British Columbia", stars: 0, forks: 5, commits: 114, activeDays: 30, impact: "Early Stage" },
-  { repo: "pymleda", owner: "UBC-MDS", language: "Python", company: "University of British Columbia", stars: 0, forks: 1, commits: 141, activeDays: 29, impact: "Early Stage" },
-  { repo: "eda_utils_py", owner: "UBC-MDS", language: "Python", company: "University of British Columbia", stars: 0, forks: 4, commits: 225, activeDays: 25, impact: "Early Stage" },
-  { repo: "APSJ21G7_ZOMATO_DATA_ANALYSIS", owner: "prabhatdash", language: "Python", company: "Independent Developer", stars: 1, forks: 0, commits: 16, activeDays: 10, impact: "Low Impact" },
-  { repo: "APSJ20G2_SALES_DATA_ANALYSIS", owner: "prabhatdash", language: "Python", company: "Independent Developer", stars: 0, forks: 0, commits: 7, activeDays: 110, impact: "Early Stage" },
-  { repo: "APSJ21G3_EXAM_DATA_ANALYSIS", owner: "prabhatdash", language: "Python", company: "Independent Developer", stars: 0, forks: 0, commits: 14, activeDays: 7, impact: "Early Stage" },
-  { repo: "MS_DA-advanced_data_analytics", owner: "heathermrauch", language: "R", company: "Independent Developer", stars: 0, forks: 0, commits: 6, activeDays: 0, impact: "Early Stage" },
-  { repo: "MS_DA-data_mining_2", owner: "heathermrauch", language: "R", company: "Independent Developer", stars: 0, forks: 0, commits: 2, activeDays: 0, impact: "Early Stage" },
-  { repo: "MS_DA-data_mining_1", owner: "heathermrauch", language: "R", company: "Independent Developer", stars: 0, forks: 0, commits: 2, activeDays: 0, impact: "Early Stage" },
-  { repo: "data_analytics", owner: "krother", language: "Python", company: "Academis", stars: 0, forks: 0, commits: 2, activeDays: 0, impact: "Early Stage" },
-  { repo: "Spreadsheet_Tutorial", owner: "krother", language: "R", company: "Academis", stars: 0, forks: 0, commits: 10, activeDays: 2384, impact: "Early Stage" },
-  { repo: "refarch-eda-store-simulator", owner: "ibm-cloud-architecture", language: "JavaScript", company: "IBM Cloud", stars: 0, forks: 8, commits: 72, activeDays: 1441, impact: "Early Stage" },
-  { repo: "python-covid-data-analysis", owner: "johnehunt", language: "Python", company: "Independent Developer", stars: 1, forks: 0, commits: 2, activeDays: 108, impact: "Low Impact" },
-  { repo: "DataAnalysisProject", owner: "johnehunt", language: "Python", company: "Independent Developer", stars: 0, forks: 0, commits: 5, activeDays: 23, impact: "Early Stage" },
-  { repo: "asgmt-2-programming-and-data-analysis-2023", owner: "datainpoint", language: "Python", company: "Independent Developer", stars: 2, forks: 0, commits: 4, activeDays: 0, impact: "Low Impact" },
-  { repo: "asgmt-1-programming-and-data-analysis-2023", owner: "datainpoint", language: "Python", company: "Independent Developer", stars: 1, forks: 0, commits: 4, activeDays: 1, impact: "Low Impact" },
-  { repo: "final-programming-and-data-analysis-2023", owner: "datainpoint", language: "Python", company: "Independent Developer", stars: 1, forks: 0, commits: 3, activeDays: 3, impact: "Low Impact" }
-];
-
-const totalUniverse = {
-  repositories: 55,
-  developers: 20,
-  languages: 5,
-  stars: 139,
-  commits: 1431,
-  impact: {
-    "High Impact": 2,
-    "Medium Impact": 0,
-    "Low Impact": 9,
-    "Early Stage": 44
-  },
-  languageCounts: {
-    Python: 40,
-    JavaScript: 5,
-    SQL: 5,
-    R: 5
-  }
-};
+let repositoryData = [];
+let languageOptions = ["All"];
+let impactOptions = ["All"];
 
 const state = {
   language: "All",
   impact: "All"
 };
-
-const languageOptions = ["All", "Python", "SQL", "R", "JavaScript"];
-const impactOptions = ["All", "High Impact", "Low Impact", "Early Stage"];
 
 const formatNumber = (value) => new Intl.NumberFormat("en-US").format(value);
 
@@ -155,10 +112,17 @@ function renderDeveloperChart(rows) {
 }
 
 function renderLanguageChart() {
-  const data = Object.entries(totalUniverse.languageCounts).map(([language, count]) => ({
+  const counts = repositoryData.reduce((acc, row) => {
+    acc[row.language] = (acc[row.language] || 0) + 1;
+    return acc;
+  }, {});
+  const data = Object.entries(counts)
+    .map(([language, count]) => ({
     language,
     count
-  }));
+    }))
+    .sort((a, b) => b.count - a.count)
+    .slice(0, 6);
   renderBarChart("language-chart", data, "count", (item) => item.language);
 }
 
@@ -286,4 +250,36 @@ function renderDashboard() {
   renderTable(rows);
 }
 
-renderDashboard();
+function initializeData(rows) {
+  repositoryData = rows.map((row) => ({
+    repo: row.repo,
+    owner: row.owner,
+    language: row.language || "Unknown",
+    stars: Number(row.stars || 0),
+    forks: Number(row.forks || 0),
+    watchers: Number(row.watchers || 0),
+    commits: Number(row.commits || 0),
+    activeDays: Number(row.active_days || 0),
+    impact: row.impact || "Early Stage",
+    hasReadme: Number(row.has_readme || 0),
+    communityHealth: Number(row.community_health || 0),
+    githubUrl: row.github_url || ""
+  }));
+
+  const languages = [...new Set(repositoryData.map((row) => row.language))].sort((a, b) => a.localeCompare(b));
+  const impacts = [...new Set(repositoryData.map((row) => row.impact))];
+
+  languageOptions = ["All", ...languages];
+  impactOptions = ["All", ...impacts];
+  renderDashboard();
+}
+
+fetch("data/repository_dashboard_full.json")
+  .then((response) => response.json())
+  .then((rows) => initializeData(rows))
+  .catch(() => {
+    const grid = document.getElementById("kpi-grid");
+    grid.innerHTML = '<article class="kpi-card"><span>Data Load Status</span><strong>Failed</strong></article>';
+    document.getElementById("repo-table-body").innerHTML =
+      '<tr><td colspan="8">The dashboard data file could not be loaded. Use GitHub Pages or run the local preview script.</td></tr>';
+  });
