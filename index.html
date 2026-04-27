@@ -6,7 +6,7 @@
     <title>Open Source Repository Intelligence</title>
     <meta
       name="description"
-      content="Portfolio project showcasing a relational database, SQL analytics, and Power BI dashboard built on open-source repository ecosystem data."
+      content="Interactive portfolio website for a SQL and BI project on open-source repository activity."
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -21,293 +21,272 @@
       <nav class="nav">
         <div class="brand">Open Source Repository Intelligence</div>
         <div class="nav-links">
+          <a href="#overview">Overview</a>
           <a href="#dashboard">Dashboard</a>
-          <a href="#architecture">Architecture</a>
-          <a href="#insights">Insights</a>
-          <a href="guide.html">Project Guide</a>
+          <a href="#model">Data Model</a>
+          <a href="#deliverables">Deliverables</a>
         </div>
       </nav>
 
       <section class="hero-grid">
         <div class="hero-copy">
-          <p class="eyebrow">Data Product • SQL • Power BI • Portfolio Site</p>
-          <h1>Open Source Repository Intelligence</h1>
+          <p class="eyebrow">SQL + BI Portfolio Project</p>
+          <h1>A clear project story with a built-in dashboard</h1>
           <p class="lede">
-            A portfolio-ready analytics product built from public repository and
-            developer data. The project combines relational database design, data
-            quality handling, reusable SQL views, and a Power BI storytelling layer
-            for exploring developer productivity, repository popularity, and project
-            longevity.
+            This website presents a relational database project built on public
+            open-source repository and developer data. It includes the project
+            summary, an interactive dashboard built directly into the page, the
+            data model, and the final SQL deliverables.
           </p>
           <div class="cta-row">
-            <a class="button primary" href="#dashboard">View Dashboard Design</a>
-            <a class="button secondary" href="docs/powerbi-build-guide.md">Build Power BI</a>
+            <a class="button primary" href="#dashboard">Open Dashboard</a>
+            <a class="button secondary" href="#deliverables">View Files</a>
           </div>
         </div>
 
         <aside class="hero-panel">
-          <div class="stat-card">
-            <span class="stat-label">Sample Repositories</span>
-            <strong id="repo-count">55</strong>
+          <div class="status-card">
+            <span class="status-label">What this site does</span>
+            <strong>Explains the project clearly</strong>
+            <p>Overview, dashboard, schema, findings, and deliverables are separated into distinct sections.</p>
           </div>
-          <div class="stat-card">
-            <span class="stat-label">Developers Modeled</span>
-            <strong id="developer-count">20</strong>
+          <div class="status-card">
+            <span class="status-label">What the dashboard does</span>
+            <strong>Shows interactive BI directly here</strong>
+            <p>No external Power BI link is required to explore the main results.</p>
           </div>
-          <div class="stat-card">
-            <span class="stat-label">Total Stars Tracked</span>
-            <strong id="star-count">139</strong>
-          </div>
-          <div class="stat-card">
-            <span class="stat-label">Total Commits Tracked</span>
-            <strong id="commit-count">1,431</strong>
+          <div class="status-card">
+            <span class="status-label">Optional future upgrade</span>
+            <strong>Add a Power BI embed later</strong>
+            <p>You can still publish a Power BI version later, but the website already works on its own.</p>
           </div>
         </aside>
       </section>
     </header>
 
     <main>
-      <section class="section story">
+      <section class="section" id="overview">
         <div class="section-heading">
-          <p class="eyebrow">Project Positioning</p>
-          <h2>What makes this stronger than a class project</h2>
+          <p class="eyebrow">Overview</p>
+          <h2>What each section is responsible for</h2>
         </div>
         <div class="feature-grid">
           <article class="feature-card">
-            <h3>Relational modeling</h3>
+            <h3>Project Overview</h3>
             <p>
-              The project is not just query practice. It includes a normalized
-              5-table schema with PK/FK constraints, indexing, lookup tables, and a
-              reusable analysis view.
+              Explains the problem, the data sources, and what the project is trying
+              to analyze.
             </p>
           </article>
           <article class="feature-card">
-            <h3>Data quality decisions</h3>
+            <h3>Interactive Dashboard</h3>
             <p>
-              It addresses realistic issues including sparse owner matching across
-              datasets, text-to-numeric cleaning for commit fields, and language
-              representation bias.
+              Shows KPI cards, rankings, distributions, and a repository explorer
+              directly inside the website.
             </p>
           </article>
           <article class="feature-card">
-            <h3>Executive-friendly outputs</h3>
+            <h3>Data Model and Files</h3>
             <p>
-              The SQL layer is packaged into a Power BI narrative that helps hiring
-              managers quickly understand the analytical question, the data model,
-              and the business takeaway.
+              Shows the schema design, the main findings, and links to the SQL
+              scripts and supporting project files.
             </p>
           </article>
         </div>
       </section>
 
-      <section class="section" id="dashboard">
+      <section class="section dashboard-section" id="dashboard">
         <div class="section-heading split">
           <div>
-            <p class="eyebrow">Power BI Layer</p>
-            <h2>Dashboard designed for embedding</h2>
+            <p class="eyebrow">Dashboard</p>
+            <h2>Interactive repository analytics</h2>
           </div>
           <p class="section-note">
-            Replace the placeholder embed URL in <code>app.js</code> after publishing
-            your Power BI report.
+            Use the filters to switch the dashboard between all repositories and
+            language-specific views.
           </p>
         </div>
 
-        <div class="dashboard-shell">
-          <div id="powerbi-frame" class="embed-placeholder">
-            <div class="placeholder-copy">
-              <span class="badge">Power BI Embed Slot</span>
-              <h3>Publish your report and paste the public embed URL</h3>
-              <p>
-                The page is ready for a Power BI iframe. Until then, the section
-                below previews the KPIs and visuals your report should contain.
-              </p>
-              <a class="button tertiary" href="guide.html#powerbi">Open Power BI guide</a>
+        <div class="filter-bar">
+          <div class="filter-group" id="language-filters"></div>
+          <div class="filter-group" id="impact-filters"></div>
+        </div>
+
+        <div class="kpi-grid" id="kpi-grid"></div>
+
+        <div class="viz-grid viz-grid-top">
+          <article class="panel panel-wide">
+            <div class="panel-head">
+              <h3>Top Repositories by Stars</h3>
+              <span class="panel-subtitle" id="repo-subtitle"></span>
             </div>
-          </div>
+            <div id="top-repos-chart" class="bar-chart"></div>
+          </article>
 
-          <div class="mini-grid">
-            <article class="mini-card">
-              <span class="mini-label">Top Repository</span>
-              <strong>refarch-eda</strong>
-              <p>111 stars, 66 forks, 1,977 active days</p>
-            </article>
-            <article class="mini-card">
-              <span class="mini-label">Top Organization</span>
-              <strong>IBM Cloud</strong>
-              <p>111 stars from 2 repositories in sample</p>
-            </article>
-            <article class="mini-card">
-              <span class="mini-label">Most Common Language</span>
-              <strong>Python</strong>
-              <p>40 of 55 repositories in the curated sample</p>
-            </article>
-            <article class="mini-card">
-              <span class="mini-label">Impact Distribution</span>
-              <strong>44 early-stage repos</strong>
-              <p>Only 2 repositories reached the high-impact tier</p>
-            </article>
-          </div>
+          <article class="panel">
+            <div class="panel-head">
+              <h3>Impact Tier Distribution</h3>
+            </div>
+            <div class="donut-wrap">
+              <div id="impact-donut" class="donut"></div>
+              <div id="impact-legend" class="legend"></div>
+            </div>
+          </article>
         </div>
 
-        <div class="report-plan">
-          <article class="report-card">
-            <span class="mini-label">Page 1</span>
-            <h3>Executive Overview</h3>
-            <p>
-              KPI cards, top repositories, top developers, language mix, and impact
-              tier distribution. This is the page to lead with in interviews.
-            </p>
+        <div class="viz-grid">
+          <article class="panel">
+            <div class="panel-head">
+              <h3>Language Mix</h3>
+            </div>
+            <div id="language-chart" class="bar-chart compact-chart"></div>
           </article>
-          <article class="report-card">
-            <span class="mini-label">Page 2</span>
-            <h3>Repository Deep Dive</h3>
-            <p>
-              Scatter analysis, lifecycle distribution, company contribution, and a
-              drillable repository table for deeper storytelling.
-            </p>
-          </article>
-          <article class="report-card">
-            <span class="mini-label">Page 3</span>
-            <h3>Data Quality and Modeling</h3>
-            <p>
-              A portfolio-differentiating page covering sparse joins, free-text
-              metric cleanup, and why the final view simplifies reporting.
-            </p>
+
+          <article class="panel">
+            <div class="panel-head">
+              <h3>Top Developers by Total Stars</h3>
+            </div>
+            <div id="developer-chart" class="bar-chart compact-chart"></div>
           </article>
         </div>
+
+        <div class="viz-grid viz-grid-bottom">
+          <article class="panel panel-wide">
+            <div class="panel-head">
+              <h3>Repository Scatter: Stars vs Forks</h3>
+              <span class="panel-subtitle">Bubble size represents commit count</span>
+            </div>
+            <div class="scatter-shell">
+              <svg id="scatter-plot" viewBox="0 0 560 320" aria-label="Scatter plot"></svg>
+            </div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-head">
+              <h3>Longest Active Repositories</h3>
+            </div>
+            <div id="lifespan-chart" class="bar-chart compact-chart"></div>
+          </article>
+        </div>
+
+        <article class="panel table-panel">
+          <div class="panel-head">
+            <h3>Repository Explorer</h3>
+            <span class="panel-subtitle">Filtered detail table</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Repository</th>
+                  <th>Owner</th>
+                  <th>Language</th>
+                  <th>Impact</th>
+                  <th>Stars</th>
+                  <th>Forks</th>
+                  <th>Commits</th>
+                  <th>Active Days</th>
+                </tr>
+              </thead>
+              <tbody id="repo-table-body"></tbody>
+            </table>
+          </div>
+        </article>
       </section>
 
-      <section class="section" id="architecture">
+      <section class="section" id="model">
         <div class="section-heading">
-          <p class="eyebrow">Architecture</p>
-          <h2>From denormalized exports to reusable analytics model</h2>
+          <p class="eyebrow">Data Model</p>
+          <h2>How the database is structured</h2>
         </div>
-
-        <div class="architecture-grid">
+        <div class="model-grid">
           <div class="diagram-card">
             <img
               src="assets/schema-diagram.png"
-              alt="Entity relationship diagram for GitHub analytics schema"
+              alt="Entity relationship diagram for the project schema"
             />
           </div>
-          <div class="architecture-copy">
-            <ol class="step-list">
-              <li>Collect public GitHub users and repository metadata from Kaggle.</li>
-              <li>Resolve developer-owner relationships and clean free-text metrics.</li>
-              <li>Load data into normalized MySQL tables for developers, repositories, metrics, companies, and languages.</li>
-              <li>Create reusable SQL views and feed the final analysis table into Power BI.</li>
-            </ol>
-
-            <div class="chip-row">
-              <span class="chip">MySQL</span>
-              <span class="chip">3NF schema</span>
-              <span class="chip">Window functions</span>
-              <span class="chip">CTEs</span>
-              <span class="chip">Views</span>
-              <span class="chip">Power BI</span>
-            </div>
+          <div class="feature-stack">
+            <article class="feature-card">
+              <h3>Tables</h3>
+              <p>
+                The schema includes developers, repositories, repository metrics,
+                languages, and companies.
+              </p>
+            </article>
+            <article class="feature-card">
+              <h3>Why this matters</h3>
+              <p>
+                The relational design separates profile information, repository
+                metadata, and performance metrics so the analysis is easier to query
+                and explain.
+              </p>
+            </article>
+            <article class="feature-card">
+              <h3>SQL features used</h3>
+              <p>
+                The project uses joins, CTEs, window functions, aggregations, CASE
+                logic, and a reusable analysis view.
+              </p>
+            </article>
           </div>
         </div>
       </section>
 
-      <section class="section" id="insights">
+      <section class="section" id="findings">
         <div class="section-heading">
-          <p class="eyebrow">Insights</p>
-          <h2>Core findings worth highlighting in interviews</h2>
-        </div>
-
-        <div class="insight-grid">
-          <article class="insight-card">
-            <h3>Activity is concentrated</h3>
-            <p>
-              A small number of organization-backed repositories account for most of
-              the star and fork volume. In this sample, IBM Cloud and AWS dominate
-              visibility metrics.
-            </p>
-          </article>
-          <article class="insight-card">
-            <h3>Most repos are still early stage</h3>
-            <p>
-              44 of 55 repositories fall into the early-stage bucket, which makes
-              the high-impact repositories easier to spot and compare.
-            </p>
-          </article>
-          <article class="insight-card">
-            <h3>Long-lived projects stand out</h3>
-            <p>
-              Repository lifespan analysis reveals a few projects with exceptionally
-              long active windows, useful for studying sustained maintenance.
-            </p>
-          </article>
-          <article class="insight-card">
-            <h3>Schema design enables reuse</h3>
-            <p>
-              The final analysis view reduces repeated joins and makes the BI layer
-              simpler to maintain, which is a strong engineering talking point.
-            </p>
-          </article>
-        </div>
-      </section>
-
-      <section class="section">
-        <div class="section-heading">
-          <p class="eyebrow">Resume Angle</p>
-          <h2>How to talk about this project</h2>
-        </div>
-        <div class="resume-block">
-          <p>
-            Designed and implemented a normalized MySQL analytics database on public
-            open-source repository and developer data, then translated the model
-            into a Power BI dashboard for repository popularity, developer
-            productivity, and project lifecycle analysis.
-          </p>
-        </div>
-      </section>
-
-      <section class="section">
-        <div class="section-heading split">
-          <div>
-            <p class="eyebrow">Launch Checklist</p>
-            <h2>What to finish next</h2>
-          </div>
-          <p class="section-note">
-            The repo already includes step-by-step guides for Power BI and GitHub Pages.
-          </p>
+          <p class="eyebrow">Findings</p>
+          <h2>Main takeaways from the analysis</h2>
         </div>
         <div class="feature-grid">
           <article class="feature-card">
-            <h3>1. Build the report</h3>
+            <h3>Visibility is concentrated</h3>
             <p>
-              Follow <a href="guide.html#powerbi">the Power BI build guide</a>
-              and import the matching theme from
-              <a href="assets/powerbi-theme.json">assets/powerbi-theme.json</a>.
+              A small number of organization-backed repositories drive most of the
+              stars and forks in the sample.
             </p>
           </article>
           <article class="feature-card">
-            <h3>2. Publish and embed</h3>
+            <h3>Python dominates the sample</h3>
             <p>
-              Publish the report, copy the embed link, and paste it into
-              <code>app.js</code> so the dashboard renders directly in the site.
+              Most repositories in the curated dataset use Python, which also
+              highlights the need for future language expansion.
             </p>
           </article>
           <article class="feature-card">
-            <h3>3. Push to GitHub Pages</h3>
+            <h3>Most projects are early stage</h3>
             <p>
-              Use <a href="guide.html#launch">the launch guide</a> to
-              publish the project site and turn the repo into a live portfolio link.
+              The impact tier breakdown shows a long tail of repositories with low
+              visibility and only a few standout projects.
             </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="deliverables">
+        <div class="section-heading">
+          <p class="eyebrow">Deliverables</p>
+          <h2>Project files and next actions</h2>
+        </div>
+        <div class="feature-grid">
+          <article class="feature-card">
+            <h3>SQL schema</h3>
+            <p><a href="sql/github_db_table.final.sql">Open table creation script</a></p>
+          </article>
+          <article class="feature-card">
+            <h3>SQL analysis queries</h3>
+            <p><a href="sql/github_db_querys.final.sql">Open analytical queries</a></p>
+          </article>
+          <article class="feature-card">
+            <h3>Project guide</h3>
+            <p><a href="guide.html">Open the companion guide page</a></p>
           </article>
         </div>
       </section>
     </main>
 
     <footer class="footer">
-      <p>Built as a portfolio-facing data product by Chenxi Liu.</p>
-      <div class="footer-links">
-        <a href="sql/github_db_table.final.sql">Schema SQL</a>
-        <a href="sql/github_db_querys.final.sql">Analytics SQL</a>
-        <a href="guide.html">Project Guide</a>
-      </div>
+      <p>Designed as a clearer portfolio website with a built-in BI dashboard.</p>
     </footer>
 
     <script src="app.js"></script>
