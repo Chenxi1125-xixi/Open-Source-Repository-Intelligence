@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Project Guide | Open Source Repository Intelligence</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="hero compact-hero">
+      <nav class="nav">
+        <div class="brand">Open Source Repository Intelligence</div>
+        <div class="nav-links">
+          <a href="index.html">Home</a>
+          <a href="#powerbi">Power BI</a>
+          <a href="#launch">Launch</a>
+          <a href="#files">Files</a>
+        </div>
+      </nav>
+
+      <section class="hero-grid compact-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">Project Guide</p>
+          <h1>Build, publish, and present the project</h1>
+          <p class="lede">
+            This page collects the execution steps for Power BI, GitHub Pages, and
+            the key repo assets so you do not need to jump through raw markdown
+            files while previewing the site.
+          </p>
+        </div>
+      </section>
+    </header>
+
+    <main>
+      <section class="section" id="powerbi">
+        <div class="section-heading">
+          <p class="eyebrow">Power BI</p>
+          <h2>What to build in the report</h2>
+        </div>
+        <div class="feature-grid">
+          <article class="feature-card">
+            <h3>Page 1: Executive Overview</h3>
+            <p>
+              KPI cards, top repositories, top developers, impact tiers, and
+              language distribution.
+            </p>
+          </article>
+          <article class="feature-card">
+            <h3>Page 2: Repository Deep Dive</h3>
+            <p>
+              Scatter plot, lifecycle distribution, company contribution, and a
+              drillable detail table.
+            </p>
+          </article>
+          <article class="feature-card">
+            <h3>Page 3: Data Quality and Model Design</h3>
+            <p>
+              EER diagram, matching constraints, cleaning logic, and future schema
+              extensions.
+            </p>
+          </article>
+        </div>
+        <div class="resume-block">
+          <p>
+            Detailed bilingual visual specs are in
+            <a href="docs/powerbi-visual-spec.md">docs/powerbi-visual-spec.md</a>.
+            Layout storyboard is in
+            <a href="docs/powerbi-report-blueprint.md">docs/powerbi-report-blueprint.md</a>.
+          </p>
+        </div>
+      </section>
+
+      <section class="section" id="launch">
+        <div class="section-heading">
+          <p class="eyebrow">Launch</p>
+          <h2>How to preview and publish the website</h2>
+        </div>
+        <div class="feature-grid">
+          <article class="feature-card">
+            <h3>Local preview</h3>
+            <p>
+              Run <code>bash preview-site.sh</code> in the project folder, then open
+              <code>http://localhost:8000</code>.
+            </p>
+          </article>
+          <article class="feature-card">
+            <h3>Power BI embed</h3>
+            <p>
+              Publish the Power BI report, copy the public embed URL, and paste it
+              into <code>app.js</code>.
+            </p>
+          </article>
+          <article class="feature-card">
+            <h3>GitHub Pages</h3>
+            <p>
+              Push the repo to GitHub and publish from the root branch folder using
+              the steps in <a href="docs/github-pages-launch.md">the launch guide</a>.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="files">
+        <div class="section-heading">
+          <p class="eyebrow">Files</p>
+          <h2>Important project assets</h2>
+        </div>
+        <div class="feature-grid">
+          <article class="feature-card">
+            <h3>Core site</h3>
+            <p><a href="index.html">index.html</a>, <a href="styles.css">styles.css</a>, <a href="app.js">app.js</a></p>
+          </article>
+          <article class="feature-card">
+            <h3>Power BI docs</h3>
+            <p><a href="docs/powerbi-build-guide.md">Build guide</a>, <a href="docs/powerbi-visual-spec.md">visual spec</a>, <a href="assets/powerbi-theme.json">theme</a></p>
+          </article>
+          <article class="feature-card">
+            <h3>SQL assets</h3>
+            <p><a href="sql/github_db_table.final.sql">schema SQL</a>, <a href="sql/github_db_querys.final.sql">analytics SQL</a>, <a href="assets/schema-diagram.png">EER diagram</a></p>
+          </article>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

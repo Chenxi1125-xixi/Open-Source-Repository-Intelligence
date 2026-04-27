@@ -2,7 +2,7 @@
 
 ## One-line summary
 
-Built a relational analytics platform on public GitHub ecosystem data and packaged it into a Power BI-ready portfolio product.
+Built a relational analytics platform on public open-source ecosystem data and packaged it into a Power BI-ready portfolio product.
 
 ## Problem
 
@@ -10,7 +10,7 @@ Raw GitHub exports mix developer identity, repository metadata, and engagement m
 
 ## What this project does
 
-- Normalizes GitHub repository and user data into 5 relational tables
+- Normalizes repository and developer data into 5 relational tables
 - Enforces parent-child and lookup relationships with keys and indexes
 - Produces reusable SQL queries and an analysis view
 - Supports a Power BI dashboard for portfolio presentation
