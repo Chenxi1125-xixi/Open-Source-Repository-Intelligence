@@ -1,19 +1,21 @@
 # Power BI Quickstart
 
-This is the fastest way to make a real Power BI version of this project.
+This is the fastest way to build a real Power BI version of this project using the full repository source.
 
 ## What you need
 
 - Power BI Desktop
-- The file `data/repository_dashboard_sample.csv`
+- The file `data/repository_dashboard_full.csv`
 
 ## Step 1: import the data
 
 1. Open Power BI Desktop.
 2. Click `Get data`.
 3. Choose `Text/CSV`.
-4. Select `data/repository_dashboard_sample.csv`.
+4. Select `data/repository_dashboard_full.csv`.
 5. Click `Load`.
+
+This file is built from the full Kaggle repository metadata source and contains 14,644 repositories.
 
 ## Step 2: create 4 KPI cards
 
@@ -110,15 +112,15 @@ Add slicers for:
 You can add these DAX measures:
 
 ```DAX
-Total Repositories = DISTINCTCOUNT(repository_dashboard_sample[repo])
+Total Repositories = DISTINCTCOUNT(repository_dashboard_full[repo])
 
-Total Developers = DISTINCTCOUNT(repository_dashboard_sample[owner])
+Total Developers = DISTINCTCOUNT(repository_dashboard_full[owner])
 
-Total Stars = SUM(repository_dashboard_sample[stars])
+Total Stars = SUM(repository_dashboard_full[stars])
 
-Total Commits = SUM(repository_dashboard_sample[commits])
+Total Commits = SUM(repository_dashboard_full[commits])
 
-Average Active Days = AVERAGE(repository_dashboard_sample[active_days])
+Average Active Days = AVERAGE(repository_dashboard_full[active_days])
 ```
 
 ## Best way to present it
@@ -126,3 +128,15 @@ Average Active Days = AVERAGE(repository_dashboard_sample[active_days])
 Say it like this:
 
 `I first built the relational database and SQL analysis, then translated the key metrics into an interactive BI dashboard for easier communication and exploration.`
+
+## Recommended report title
+
+Use:
+
+`Open Source Repository Intelligence`
+
+## Recommended first page title
+
+Use:
+
+`Repository Activity Overview`

@@ -16,7 +16,7 @@ This repo is structured to present the project as a polished portfolio piece ins
 - A data dictionary in `docs/data-dictionary.md`
 - An EER diagram in `assets/schema-diagram.png`
 - A Power BI theme file in `assets/powerbi-theme.json`
-- A sample BI dataset in `data/repository_dashboard_sample.csv`
+- A full BI dataset in `data/repository_dashboard_full.csv`
 - A local preview script in `preview-site.sh`
 
 ## Recommended portfolio framing
@@ -46,7 +46,7 @@ Use this project as a data product story:
 2. Review analytical queries in `sql/github_db_querys.final.sql`.
 3. Build the Power BI report using the guide in `docs/powerbi-build-guide.md`.
 4. Use `docs/powerbi-visual-spec.md` for exact titles, fields, and layout order.
-5. Publish the Power BI report and paste the embed URL into `app.js`.
+5. Use `docs/powerbi-quickstart.md` to build a Power BI version from the full repository dataset.
 6. Preview the site locally with `bash preview-site.sh`.
 7. Host the site with GitHub Pages, Netlify, or Vercel.
 
