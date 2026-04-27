@@ -1,0 +1,42 @@
+{
+  "name": "GitHub Open-Source Activity Analytics",
+  "foreground": "#1F2328",
+  "background": "#F5EFE4",
+  "tableAccent": "#C65D26",
+  "dataColors": [
+    "#12343B",
+    "#C65D26",
+    "#4B6A88",
+    "#8A3F17",
+    "#A7B8C7",
+    "#E6C89A",
+    "#59636E",
+    "#D98447"
+  ],
+  "visualStyles": {
+    "*": {
+      "*": {
+        "title": [
+          {
+            "show": true,
+            "fontFamily": "Segoe UI",
+            "color": { "solid": { "color": "#1F2328" } },
+            "textSize": 14
+          }
+        ],
+        "labels": [
+          {
+            "color": { "solid": { "color": "#59636E" } },
+            "fontSize": 11
+          }
+        ],
+        "background": [
+          {
+            "show": false,
+            "transparency": 100
+          }
+        ]
+      }
+    }
+  }
+}
