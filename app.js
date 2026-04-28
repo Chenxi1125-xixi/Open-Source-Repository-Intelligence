@@ -1,7 +1,7 @@
 let repositoryData = [];
 let languageOptions = ["All"];
 let impactOptions = ["All"];
-const powerBiReportUrl = "";
+const powerBiReportUrl = "https://app.powerbi.com/links/9YXvYC_yb6?ctid=704d822c-358a-4784-9a16-49e20b75f941&pbi_source=linkShare&bookmarkGuid=000e47cf-321c-4b05-96ca-d1eae8ffcaa5";
 
 const state = {
   language: "All",
