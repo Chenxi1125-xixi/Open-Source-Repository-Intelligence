@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Analysis | Open Source Repository Intelligence</title>
+    <meta
+      name="description"
+      content="Interactive analysis page for repository visibility, impact levels, lifecycle, and community-health patterns."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="hero">
+      <nav class="nav">
+        <div class="brand">Open Source Repository Intelligence</div>
+        <div class="nav-links">
+          <a href="index.html">Overview</a>
+          <a class="active" href="analysis.html">Analysis</a>
+          <a href="model.html">Data Model</a>
+          <a href="findings.html">Findings</a>
+          <a href="deliverables.html">Deliverables</a>
+          <a href="guide.html">Guide</a>
+        </div>
+      </nav>
+
+      <section class="hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">Analysis</p>
+          <h1>Interactive views of repository behavior</h1>
+          <p class="lede">
+            This page brings together the project's analytical layer: rankings,
+            distributions, lifecycle summaries, impact tiers, documentation
+            coverage, and community-health views.
+          </p>
+        </div>
+        <aside class="hero-panel">
+          <div class="status-card">
+            <span class="status-label">Data Scope</span>
+            <strong>Full cleaned repository dataset</strong>
+            <p>All charts on this page are driven by the cleaned metadata file derived from the full repository source.</p>
+          </div>
+          <div class="status-card">
+            <span class="status-label">Filter Logic</span>
+            <strong>Language + impact tier</strong>
+            <p>Use the controls to isolate language-specific or visibility-specific subsets of repositories.</p>
+          </div>
+        </aside>
+      </section>
+    </header>
+
+    <main>
+      <section class="section dashboard-section">
+        <div class="section-heading split">
+          <div>
+            <p class="eyebrow">Interactive Analysis</p>
+            <h2>Repository behavior under different filters</h2>
+          </div>
+          <p class="section-note">
+            Impact levels follow the SQL view logic from the project: High Impact is at least 10 stars, Medium Impact is 3 to 9 stars, Low Impact is 1 to 2 stars, and Early Stage is 0 stars.
+          </p>
+        </div>
+
+        <div class="dashboard-intro">
+          <article class="feature-card">
+            <h3>Distribution patterns</h3>
+            <p>Use the star, fork, impact, and language views to see whether repository attention is broad or highly concentrated.</p>
+          </article>
+          <article class="feature-card">
+            <h3>Lifecycle patterns</h3>
+            <p>The lifecycle curve, active-days rankings, and commit summaries help compare early-stage repositories with longer-lived projects.</p>
+          </article>
+          <article class="feature-card">
+            <h3>Quality signals</h3>
+            <p>README coverage and community health views show whether documentation quality stays strong even when visibility is uneven.</p>
+          </article>
+        </div>
+
+        <div class="filter-bar">
+          <div class="filter-block">
+            <span class="filter-label">Language Filter</span>
+            <div class="filter-group" id="language-filters"></div>
+          </div>
+          <div class="filter-block">
+            <span class="filter-label">Impact Filter</span>
+            <div class="filter-group" id="impact-filters"></div>
+          </div>
+          <div class="filter-block filter-status">
+            <span class="filter-label">Current View</span>
+            <div id="filter-summary" class="filter-summary"></div>
+            <button id="reset-filters" class="filter-chip reset-chip" type="button">Reset Filters</button>
+          </div>
+        </div>
+
+        <div class="kpi-grid" id="kpi-grid"></div>
+        <div class="insight-summary" id="insight-summary"></div>
+
+        <div class="viz-grid viz-grid-top">
+          <article class="panel panel-wide">
+            <div class="panel-head">
+              <h3>Top Repositories by Stars</h3>
+              <span class="panel-subtitle" id="repo-subtitle"></span>
+            </div>
+            <div id="top-repos-chart" class="bar-chart"></div>
+          </article>
+          <article class="panel">
+            <div class="panel-head">
+              <h3>Impact Tier Distribution</h3>
+            </div>
+            <div class="donut-wrap">
+              <div id="impact-donut" class="donut"></div>
+              <div id="impact-legend" class="legend"></div>
+            </div>
+            <p class="figure-note">
+              Impact tiers are computed with the same SQL view logic used in the project write-up. This plot shows how the current filtered subset is distributed across those four visibility bands.
+            </p>
+          </article>
+        </div>
+
+        <div class="viz-grid">
+          <article class="panel">
+            <div class="panel-head">
+              <h3>Language Mix</h3>
+            </div>
+            <div id="language-chart" class="bar-chart compact-chart"></div>
+          </article>
+          <article class="panel">
+            <div class="panel-head">
+              <h3>Top Owners by Total Stars</h3>
+            </div>
+            <div id="developer-chart" class="bar-chart compact-chart"></div>
+          </article>
+        </div>
+
+        <div class="viz-grid">
+          <article class="panel">
+            <div class="panel-head">
+              <h3>Log Visibility Scatter</h3>
+              <span class="panel-subtitle">Stars vs forks on a log-scaled view</span>
+            </div>
+            <div class="svg-shell">
+              <svg id="visibility-scatter" viewBox="0 0 560 320" aria-label="Log visibility scatter plot"></svg>
+            </div>
+            <p class="figure-note">
+              Each point represents one repository in the filtered view. The x-axis uses log-scaled forks, the y-axis uses log-scaled stars, point size reflects commit volume, and point color follows the impact-level classification.
+            </p>
+          </article>
+          <article class="panel">
+            <div class="panel-head">
+              <h3>Top Owners by Repository Count</h3>
+              <span class="panel-subtitle">Who publishes the most repositories</span>
+            </div>
+            <div id="owner-volume-chart" class="bar-chart compact-chart"></div>
+          </article>
+        </div>
+
+        <div class="viz-grid viz-grid-bottom">
+          <article class="panel panel-wide">
+            <div class="panel-head">
+              <h3>Cumulative Lifecycle Curve</h3>
+              <span class="panel-subtitle">How quickly repository activity ages out</span>
+            </div>
+            <div class="svg-shell">
+              <svg id="lifecycle-line" viewBox="0 0 560 320" aria-label="Lifecycle line chart"></svg>
+            </div>
+            <p class="figure-note">
+              This curve shows the cumulative share of repositories that reach each active-days band, from 0 to 30 days through 3 or more years. It summarizes how quickly repository activity falls off over time.
+            </p>
+          </article>
+          <article class="panel">
+            <div class="panel-head">
+              <h3>README Coverage</h3>
+            </div>
+            <div id="readme-summary" class="metric-stack"></div>
+          </article>
+        </div>
+
+        <div class="viz-grid">
+          <article class="panel">
+            <div class="panel-head">
+              <h3>Community Health Grid</h3>
+              <span class="panel-subtitle">Tile view of quality distribution</span>
+            </div>
+            <div id="health-grid" class="health-grid"></div>
+            <p class="figure-note">
+              Each tile stands for one repository, up to 120 repositories in the current filtered view. Darker tiles indicate higher community-health scores, while lighter tiles indicate missing or weak health signals.
+            </p>
+          </article>
+          <article class="panel">
+            <div class="panel-head">
+              <h3>Top Active Repositories</h3>
+              <span class="panel-subtitle">Longest-lived repositories in current view</span>
+            </div>
+            <div id="lifespan-chart" class="bar-chart compact-chart"></div>
+          </article>
+        </div>
+
+        <article class="panel table-panel">
+          <div class="panel-head">
+            <h3>Repository Spotlight</h3>
+            <span class="panel-subtitle">Top 12 filtered repositories only</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Repository</th>
+                  <th>Owner</th>
+                  <th>Language</th>
+                  <th>Impact</th>
+                  <th>Stars</th>
+                  <th>Forks</th>
+                  <th>Commits</th>
+                  <th>Active Days</th>
+                </tr>
+              </thead>
+              <tbody id="repo-table-body"></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>Interactive analysis layer built from the cleaned repository metadata source.</p>
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
+</html>

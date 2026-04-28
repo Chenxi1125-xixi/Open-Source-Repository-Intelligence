@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Data Model | Open Source Repository Intelligence</title>
+    <meta
+      name="description"
+      content="Schema design and SQL methodology for the open-source repository database project."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="hero">
+      <nav class="nav">
+        <div class="brand">Open Source Repository Intelligence</div>
+        <div class="nav-links">
+          <a href="index.html">Overview</a>
+          <a href="analysis.html">Analysis</a>
+          <a class="active" href="model.html">Data Model</a>
+          <a href="findings.html">Findings</a>
+          <a href="deliverables.html">Deliverables</a>
+          <a href="guide.html">Guide</a>
+        </div>
+      </nav>
+
+      <section class="hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">Data Model</p>
+          <h1>How the database supports the analysis</h1>
+          <p class="lede">
+            The project uses five normalized tables to separate owners,
+            repositories, metrics, languages, and companies. This structure makes
+            downstream ranking, lifecycle, and cross-entity reporting easier to query.
+          </p>
+        </div>
+      </section>
+    </header>
+
+    <main>
+      <section class="section">
+        <div class="section-heading">
+          <p class="eyebrow">Schema</p>
+          <h2>Entity structure and analytical role</h2>
+        </div>
+        <div class="model-grid">
+          <div class="diagram-card">
+            <img src="assets/schema-diagram.png" alt="Entity relationship diagram for the project schema" />
+          </div>
+          <div class="feature-stack">
+            <article class="feature-card">
+              <h3>Tables</h3>
+              <p>The schema includes developers, repositories, repository metrics, languages, and companies.</p>
+            </article>
+            <article class="feature-card">
+              <h3>Analytical role</h3>
+              <p>The relational design separates profile information, repository metadata, and performance metrics so that queries can isolate ownership, repository activity, and language signals more clearly.</p>
+            </article>
+            <article class="feature-card">
+              <h3>Source mismatch</h3>
+              <p>The repository metadata file has much wider coverage than the separate GitHub users file. That mismatch is why the live analysis relies on the full repository source.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-heading">
+          <p class="eyebrow">Methodology</p>
+          <h2>How the SQL analysis was designed</h2>
+        </div>
+        <div class="feature-grid">
+          <article class="feature-card">
+            <h3>Popularity ranking</h3>
+            <p>Query 1 uses <code>DENSE_RANK()</code> over stars and forks to rank repositories by visibility across owners and languages.</p>
+          </article>
+          <article class="feature-card">
+            <h3>Active lifespan</h3>
+            <p>Query 2 uses <code>DATEDIFF()</code> to measure the number of days between repository creation and last push.</p>
+          </article>
+          <article class="feature-card">
+            <h3>Impact classification</h3>
+            <p>Query 3 uses <code>CASE WHEN</code> logic to classify repositories into impact tiers using star thresholds.</p>
+          </article>
+          <article class="feature-card">
+            <h3>Developer productivity</h3>
+            <p>Query 4 uses <code>COUNT</code>, <code>SUM</code>, and <code>AVG</code> with <code>GROUP BY</code> to compare owners by total repositories, stars, forks, and average commits.</p>
+          </article>
+          <article class="feature-card">
+            <h3>Above-average developers</h3>
+            <p>Query 5 uses two CTEs and a <code>CROSS JOIN</code> to identify developers whose repository counts exceed the sample mean.</p>
+          </article>
+          <article class="feature-card">
+            <h3>Reusable SQL view</h3>
+            <p>Queries 6 and 7 use a five-table join and a reusable view to precompute <code>active_days</code> and <code>impact_level</code> for downstream reporting.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-heading">
+          <p class="eyebrow">Data Sources</p>
+          <h2>Where the model comes from</h2>
+        </div>
+        <div class="feature-grid">
+          <article class="feature-card">
+            <h3>Repository dataset</h3>
+            <p>Repository name, owner, URL, stars, forks, watchers, commit count, contributors, primary language, files, README size, health score, and dates.</p>
+            <p class="source-link"><a href="https://www.kaggle.com/datasets/isaacoresanya/github-repository-metadata" target="_blank" rel="noreferrer">View Kaggle repository metadata source</a></p>
+          </article>
+          <article class="feature-card">
+            <h3>User dataset</h3>
+            <p>Login, name, company, location, followers, following, public repo count, account creation date, and profile-level context fields.</p>
+            <p class="source-link"><a href="https://www.kaggle.com/datasets/donbarbos/github-users" target="_blank" rel="noreferrer">View Kaggle GitHub users source</a></p>
+          </article>
+          <article class="feature-card">
+            <h3>ETL challenge</h3>
+            <p>The natural join key, owner login, is sparse across the two sources, so the presentation sample and the live analytics layer use different coverage strategies.</p>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>Schema design and SQL methodology for the repository analytics workflow.</p>
+    </footer>
+  </body>
+</html>

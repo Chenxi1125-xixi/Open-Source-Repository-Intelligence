@@ -89,6 +89,12 @@ th {
 .nav-links a {
   text-decoration: none;
   color: var(--muted);
+  padding-bottom: 2px;
+}
+
+.nav-links a.active {
+  color: var(--ink);
+  border-bottom: 2px solid var(--accent);
 }
 
 .hero {

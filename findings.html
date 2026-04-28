@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Findings | Open Source Repository Intelligence</title>
+    <meta
+      name="description"
+      content="Key findings, data-quality challenges, and future work for the repository analytics project."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="hero">
+      <nav class="nav">
+        <div class="brand">Open Source Repository Intelligence</div>
+        <div class="nav-links">
+          <a href="index.html">Overview</a>
+          <a href="analysis.html">Analysis</a>
+          <a href="model.html">Data Model</a>
+          <a class="active" href="findings.html">Findings</a>
+          <a href="deliverables.html">Deliverables</a>
+          <a href="guide.html">Guide</a>
+        </div>
+      </nav>
+
+      <section class="hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">Findings</p>
+          <h1>Main takeaways, challenges, and next steps</h1>
+          <p class="lede">
+            This page condenses the final presentation into conclusions that are easier
+            to scan on the web: what the analysis found, what limited the data,
+            and how the schema could expand in future versions.
+          </p>
+        </div>
+      </section>
+    </header>
+
+    <main>
+      <section class="section">
+        <div class="section-heading">
+          <p class="eyebrow">Main Takeaways</p>
+          <h2>What the analysis suggests</h2>
+        </div>
+        <div class="feature-grid">
+          <article class="feature-card">
+            <h3>Visibility is concentrated</h3>
+            <p>A small number of organization-backed repositories drive most of the stars and forks in the sample.</p>
+          </article>
+          <article class="feature-card">
+            <h3>Python dominates the sample</h3>
+            <p>Most repositories in the current cleaned dataset use Python, which highlights both the shape of the source and the need for future language expansion.</p>
+          </article>
+          <article class="feature-card">
+            <h3>Most projects are early stage</h3>
+            <p>The impact-tier breakdown shows a long tail of repositories with low visibility and only a few standout projects.</p>
+          </article>
+          <article class="feature-card">
+            <h3>README usage is high</h3>
+            <p>README coverage remains strong even when engagement is low, suggesting documentation quality does not move in lockstep with stars.</p>
+          </article>
+          <article class="feature-card">
+            <h3>Activity is concentrated</h3>
+            <p>The classroom sample showed IBM and AWS repositories accounting for much of the visible star, fork, and commit activity.</p>
+          </article>
+          <article class="feature-card">
+            <h3>Productivity is skewed</h3>
+            <p>In the sample used for the SQL presentation, 75% of developers exceeded the sample mean repository count, indicating a top-heavy output distribution.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-heading">
+          <p class="eyebrow">Challenges</p>
+          <h2>What made the data difficult to work with</h2>
+        </div>
+        <div class="feature-grid">
+          <article class="feature-card">
+            <h3>Disjoint sources</h3>
+            <p>Of roughly 14.6K repository owners, only about 200 had matching profiles in the GitHub users dataset, so owner-level integration was sparse.</p>
+          </article>
+          <article class="feature-card">
+            <h3>Free-text numeric fields</h3>
+            <p>Fields like <code>commit_count_display</code> mixed numbers with literal text, so regular-expression extraction was needed before loading into MySQL.</p>
+          </article>
+          <article class="feature-card">
+            <h3>Single-language skew</h3>
+            <p>The repository source is overwhelmingly Python-heavy, which makes the language lookup thinner than a broader GitHub sample would allow.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-heading">
+          <p class="eyebrow">Future Work</p>
+          <h2>How the project could grow</h2>
+        </div>
+        <div class="feature-grid">
+          <article class="feature-card">
+            <h3>Many-to-many language model</h3>
+            <p>Ingest <code>languages_breakdown</code> JSON into a <code>repository_languages(repo_id, language_id, bytes)</code> junction table.</p>
+          </article>
+          <article class="feature-card">
+            <h3>Time-series metrics</h3>
+            <p>Convert repository metrics into a snapshot-based structure to track growth trajectories over time.</p>
+          </article>
+          <article class="feature-card">
+            <h3>Direct GitHub API enrichment</h3>
+            <p>Use live profile retrieval to reduce the current cross-source overlap gap and improve developer-level coverage.</p>
+          </article>
+          <article class="feature-card">
+            <h3>Seasonality and timing</h3>
+            <p>Add time-zone and timestamp-level activity fields to move beyond total commit counts into temporal behavior analysis.</p>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>Conclusions and future directions adapted from the final project presentation.</p>
+    </footer>
+  </body>
+</html>

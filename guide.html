@@ -11,11 +11,12 @@
       <nav class="nav">
         <div class="brand">Open Source Repository Intelligence</div>
         <div class="nav-links">
-          <a href="index.html">Home</a>
-          <a href="#site">Site</a>
-          <a href="#dashboard">Dashboard</a>
-          <a href="#powerbi">Power BI</a>
-          <a href="#next">Next Step</a>
+          <a href="index.html">Overview</a>
+          <a href="analysis.html">Analysis</a>
+          <a href="model.html">Data Model</a>
+          <a href="findings.html">Findings</a>
+          <a href="deliverables.html">Deliverables</a>
+          <a class="active" href="guide.html">Guide</a>
         </div>
       </nav>
 
@@ -24,133 +25,61 @@
           <p class="eyebrow">Companion Guide</p>
           <h1>How to understand and extend the website</h1>
           <p class="lede">
-            The homepage is now the main product: it already includes a built-in BI
-            dashboard, a project summary, the schema section, and links to the SQL
-            deliverables. This guide explains how each part is meant to be used.
+            The project now uses multiple pages instead of one long scroll. This
+            guide explains how each page is meant to be used and where to find the
+            main technical assets.
           </p>
         </div>
       </section>
     </header>
 
     <main>
-      <section class="section" id="site">
+      <section class="section">
         <div class="section-heading">
           <p class="eyebrow">Site Structure</p>
           <h2>What each page is for</h2>
         </div>
         <div class="feature-grid">
           <article class="feature-card">
-            <h3>Home page</h3>
-            <p>
-              The main website presents the project story and contains the built-in
-              interactive dashboard.
-            </p>
+            <h3>Overview</h3>
+            <p>The landing page explains the research problem, the data scope, and how the project is organized.</p>
           </article>
           <article class="feature-card">
-            <h3>Guide page</h3>
-            <p>
-              This page explains the structure, the intention behind the sections,
-              and the optional future upgrades.
-            </p>
+            <h3>Analysis</h3>
+            <p>This page contains the interactive dashboard with filters, KPI cards, charts, and repository spotlight views.</p>
           </article>
           <article class="feature-card">
-            <h3>SQL files</h3>
-            <p>
-              The SQL scripts remain the formal technical deliverables for schema
-              creation and analysis logic.
-            </p>
+            <h3>Data Model</h3>
+            <p>This page explains the schema, SQL design choices, and how the two datasets fit together.</p>
+          </article>
+          <article class="feature-card">
+            <h3>Findings</h3>
+            <p>This page summarizes conclusions, challenges, and future work adapted from the final presentation.</p>
+          </article>
+          <article class="feature-card">
+            <h3>Deliverables</h3>
+            <p>This page gathers the SQL files, cleaned BI dataset, Power BI report, and documentation links.</p>
           </article>
         </div>
       </section>
 
-      <section class="section" id="dashboard">
+      <section class="section">
         <div class="section-heading">
-          <p class="eyebrow">Dashboard</p>
-          <h2>What the built-in BI section includes</h2>
-        </div>
-        <div class="feature-grid">
-          <article class="feature-card">
-            <h3>KPI cards</h3>
-            <p>
-              Show repositories, developers, stars, and commits for the current
-              filtered view.
-            </p>
-          </article>
-          <article class="feature-card">
-            <h3>Charts</h3>
-            <p>
-              Show top repositories, developer rankings, language mix, impact
-              distribution, star-count buckets, lifecycle views, and quality-related
-              summaries.
-            </p>
-          </article>
-          <article class="feature-card">
-            <h3>Repository spotlight</h3>
-            <p>
-              Highlights the top filtered repositories instead of dumping the entire
-              dataset into one large table.
-            </p>
-          </article>
-        </div>
-      </section>
-
-      <section class="section" id="powerbi">
-        <div class="section-heading">
-          <p class="eyebrow">Power BI Version</p>
+          <p class="eyebrow">Power BI</p>
           <h2>How it fits beside the built-in dashboard</h2>
         </div>
         <div class="feature-grid">
           <article class="feature-card">
             <h3>Built-in website dashboard</h3>
-            <p>
-              Best for GitHub Pages, quick browsing, and keeping the portfolio fully
-              self-contained.
-            </p>
+            <p>Best for GitHub Pages, quick browsing, and keeping the project self-contained.</p>
           </article>
           <article class="feature-card">
             <h3>Formal Power BI report</h3>
-            <p>
-              Best for a standard BI deliverable, classroom presentation, and
-              interviews where you want to show Power BI specifically.
-            </p>
+            <p>Best for a standard BI deliverable, classroom presentation, and interviews where you want to show Power BI specifically.</p>
           </article>
           <article class="feature-card">
             <h3>Recommended setup</h3>
-            <p>
-              Keep both. Use the website as the main portfolio entry point and add a
-              published Power BI link as an alternate version.
-            </p>
-          </article>
-        </div>
-      </section>
-
-      <section class="section" id="next">
-        <div class="section-heading">
-          <p class="eyebrow">Optional Next Step</p>
-          <h2>What you can add later</h2>
-        </div>
-        <div class="feature-grid">
-          <article class="feature-card">
-            <h3>Power BI version</h3>
-            <p>
-              You can still build a Power BI report later and either link to it or
-              embed it as an additional page. The fastest starting point is
-              <a href="docs/powerbi-quickstart.md">docs/powerbi-quickstart.md</a>.
-            </p>
-          </article>
-          <article class="feature-card">
-            <h3>Full dataset already prepared</h3>
-            <p>
-              The repository-wide BI file is already available in
-              <a href="data/repository_dashboard_full.csv">data/repository_dashboard_full.csv</a>.
-            </p>
-          </article>
-          <article class="feature-card">
-            <h3>GitHub Pages deployment</h3>
-            <p>
-              Once GitHub Pages is enabled on the `main` branch, this site becomes
-              your live portfolio URL.
-            </p>
+            <p>Use the website as the main project entry point and keep Power BI as a companion artifact linked from the Deliverables page.</p>
           </article>
         </div>
       </section>

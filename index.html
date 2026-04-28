@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Open Source Repository Intelligence</title>
+    <title>Overview | Open Source Repository Intelligence</title>
     <meta
       name="description"
-      content="Research website for a SQL and BI project on open-source repository activity and repository quality patterns."
+      content="Overview page for a SQL and BI research project on open-source repository visibility, maintenance, and documentation quality."
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -21,13 +21,12 @@
       <nav class="nav">
         <div class="brand">Open Source Repository Intelligence</div>
         <div class="nav-links">
-          <a href="#overview">Overview</a>
-          <a href="#questions">Questions</a>
-          <a href="#sources">Data</a>
-          <a href="#dashboard">Analysis</a>
-          <a href="#model">Data Model</a>
-          <a href="#findings">Findings</a>
-          <a href="#deliverables">Deliverables</a>
+          <a class="active" href="index.html">Overview</a>
+          <a href="analysis.html">Analysis</a>
+          <a href="model.html">Data Model</a>
+          <a href="findings.html">Findings</a>
+          <a href="deliverables.html">Deliverables</a>
+          <a href="guide.html">Guide</a>
         </div>
       </nav>
 
@@ -37,13 +36,13 @@
           <h1>How visible, maintained, and documented are open-source repositories?</h1>
           <p class="lede">
             This project studies repository visibility, lifecycle, documentation,
-            and community health using public GitHub metadata. The site brings
-            together the research question, data scope, analytical views, schema
-            design, and final SQL and BI outputs.
+            and community health using public GitHub metadata. It combines a
+            normalized SQL schema, cleaned analytics data, an interactive web
+            dashboard, and a companion Power BI report.
           </p>
           <div class="cta-row">
-            <a class="button primary" href="#questions">Research Questions</a>
-            <a class="button secondary" href="#dashboard">Open Analysis</a>
+            <a class="button primary" href="analysis.html">Open Analysis</a>
+            <a class="button secondary" href="deliverables.html">View Deliverables</a>
           </div>
         </div>
 
@@ -56,19 +55,19 @@
           <div class="status-card">
             <span class="status-label">Core Themes</span>
             <strong>Visibility, quality, lifecycle</strong>
-            <p>The analysis focuses on stars, forks, active lifespan, README coverage, ownership concentration, and health scores.</p>
+            <p>The study focuses on stars, forks, active lifespan, README coverage, ownership concentration, and health scores.</p>
           </div>
           <div class="status-card">
             <span class="status-label">Methods</span>
             <strong>SQL, cleaned BI dataset, web analytics</strong>
-            <p>The project combines relational modeling, query design, data cleaning, and interactive visual analysis in one workflow.</p>
+            <p>The workflow combines relational modeling, query design, data cleaning, and interactive visual analysis.</p>
           </div>
         </aside>
       </section>
     </header>
 
     <main>
-      <section class="section" id="overview">
+      <section class="section">
         <div class="section-heading">
           <p class="eyebrow">Overview</p>
           <h2>What this project investigates</h2>
@@ -95,7 +94,7 @@
         </div>
       </section>
 
-      <section class="section" id="questions">
+      <section class="section">
         <div class="section-heading">
           <p class="eyebrow">Research Questions</p>
           <h2>What the analysis is trying to answer</h2>
@@ -122,7 +121,7 @@
         </div>
       </section>
 
-      <section class="section" id="sources">
+      <section class="section">
         <div class="section-heading">
           <p class="eyebrow">Data</p>
           <h2>How the datasets are used</h2>
@@ -151,331 +150,27 @@
         </div>
       </section>
 
-      <section class="section dashboard-section" id="dashboard">
-        <div class="section-heading split">
-          <div>
-            <p class="eyebrow">Analysis</p>
-            <h2>Interactive views of repository behavior</h2>
-          </div>
-          <p class="section-note">
-            All charts in this section are driven by the cleaned full repository metadata source.
-          </p>
-        </div>
-
-        <div class="dashboard-intro">
-          <article class="feature-card">
-            <h3>Distribution patterns</h3>
-            <p>
-              Use the star, fork, impact, and language views to see whether repository attention is broad or highly concentrated.
-            </p>
-          </article>
-          <article class="feature-card">
-            <h3>Lifecycle patterns</h3>
-            <p>
-              The lifecycle curve, active-days rankings, and commit summaries help compare early-stage repositories with longer-lived projects.
-            </p>
-          </article>
-          <article class="feature-card">
-            <h3>Quality signals</h3>
-            <p>
-              README coverage and community health views show whether documentation quality stays strong even when visibility is uneven.
-            </p>
-          </article>
-        </div>
-
-        <div class="filter-bar">
-          <div class="filter-block">
-            <span class="filter-label">Language Filter</span>
-            <div class="filter-group" id="language-filters"></div>
-          </div>
-          <div class="filter-block">
-            <span class="filter-label">Impact Filter</span>
-            <div class="filter-group" id="impact-filters"></div>
-          </div>
-          <div class="filter-block filter-status">
-            <span class="filter-label">Current View</span>
-            <div id="filter-summary" class="filter-summary"></div>
-            <button id="reset-filters" class="filter-chip reset-chip" type="button">Reset Filters</button>
-          </div>
-        </div>
-
-        <div class="kpi-grid" id="kpi-grid"></div>
-
-        <div class="insight-summary" id="insight-summary"></div>
-
-        <div class="viz-grid viz-grid-top">
-          <article class="panel panel-wide">
-            <div class="panel-head">
-              <h3>Top Repositories by Stars</h3>
-              <span class="panel-subtitle" id="repo-subtitle"></span>
-            </div>
-            <div id="top-repos-chart" class="bar-chart"></div>
-          </article>
-
-          <article class="panel">
-            <div class="panel-head">
-              <h3>Impact Tier Distribution</h3>
-            </div>
-            <div class="donut-wrap">
-              <div id="impact-donut" class="donut"></div>
-              <div id="impact-legend" class="legend"></div>
-            </div>
-            <p class="figure-note">
-              Impact levels follow the SQL view logic from the project: <strong>High Impact</strong> means at least 10 stars, <strong>Medium Impact</strong> means 3 to 9 stars, <strong>Low Impact</strong> means 1 to 2 stars, and <strong>Early Stage</strong> means 0 stars.
-            </p>
-          </article>
-        </div>
-
-        <div class="viz-grid">
-          <article class="panel">
-            <div class="panel-head">
-              <h3>Language Mix</h3>
-            </div>
-            <div id="language-chart" class="bar-chart compact-chart"></div>
-          </article>
-
-          <article class="panel">
-            <div class="panel-head">
-              <h3>Top Owners by Total Stars</h3>
-            </div>
-            <div id="developer-chart" class="bar-chart compact-chart"></div>
-          </article>
-        </div>
-
-        <div class="viz-grid">
-          <article class="panel">
-            <div class="panel-head">
-              <h3>Log Visibility Scatter</h3>
-              <span class="panel-subtitle">Stars vs forks on a log-scaled view</span>
-            </div>
-            <div class="svg-shell">
-              <svg id="visibility-scatter" viewBox="0 0 560 320" aria-label="Log visibility scatter plot"></svg>
-            </div>
-            <p class="figure-note">
-              Each point represents one repository in the filtered view. The x-axis uses log-scaled forks, the y-axis uses log-scaled stars, point size reflects commit volume, and point color follows the impact-level classification.
-            </p>
-          </article>
-
-          <article class="panel">
-            <div class="panel-head">
-              <h3>Top Owners by Repository Count</h3>
-              <span class="panel-subtitle">Who publishes the most repositories</span>
-            </div>
-            <div id="owner-volume-chart" class="bar-chart compact-chart"></div>
-          </article>
-        </div>
-
-        <div class="viz-grid viz-grid-bottom">
-          <article class="panel panel-wide">
-            <div class="panel-head">
-              <h3>Cumulative Lifecycle Curve</h3>
-              <span class="panel-subtitle">How quickly repository activity ages out</span>
-            </div>
-            <div class="svg-shell">
-              <svg id="lifecycle-line" viewBox="0 0 560 320" aria-label="Lifecycle line chart"></svg>
-            </div>
-            <p class="figure-note">
-              This curve shows the cumulative share of repositories that reach each active-days band, from 0 to 30 days through 3 or more years. It summarizes how quickly repository activity falls off over time.
-            </p>
-          </article>
-
-          <article class="panel">
-            <div class="panel-head">
-              <h3>README Coverage</h3>
-            </div>
-            <div id="readme-summary" class="metric-stack"></div>
-          </article>
-        </div>
-
-        <div class="viz-grid">
-          <article class="panel">
-            <div class="panel-head">
-              <h3>Community Health Grid</h3>
-              <span class="panel-subtitle">Tile view of quality distribution</span>
-            </div>
-            <div id="health-grid" class="health-grid"></div>
-            <p class="figure-note">
-              Each tile stands for one repository, up to 120 repositories in the current filtered view. Darker tiles indicate higher community-health scores, while lighter tiles indicate missing or weak health signals.
-            </p>
-          </article>
-
-          <article class="panel">
-            <div class="panel-head">
-              <h3>Top Active Repositories</h3>
-              <span class="panel-subtitle">Longest-lived repositories in current view</span>
-            </div>
-            <div id="lifespan-chart" class="bar-chart compact-chart"></div>
-          </article>
-        </div>
-
-        <article class="panel table-panel">
-          <div class="panel-head">
-            <h3>Repository Spotlight</h3>
-            <span class="panel-subtitle">Top 12 filtered repositories only</span>
-          </div>
-          <div class="table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>Repository</th>
-                  <th>Owner</th>
-                  <th>Language</th>
-                  <th>Impact</th>
-                  <th>Stars</th>
-                  <th>Forks</th>
-                  <th>Commits</th>
-                  <th>Active Days</th>
-                </tr>
-              </thead>
-              <tbody id="repo-table-body"></tbody>
-            </table>
-          </div>
-        </article>
-      </section>
-
-      <section class="section" id="model">
+      <section class="section">
         <div class="section-heading">
-          <p class="eyebrow">Data Model</p>
-          <h2>How the database supports the analysis</h2>
-        </div>
-        <div class="model-grid">
-          <div class="diagram-card">
-            <img
-              src="assets/schema-diagram.png"
-              alt="Entity relationship diagram for the project schema"
-            />
-          </div>
-          <div class="feature-stack">
-            <article class="feature-card">
-              <h3>Tables</h3>
-              <p>
-                The schema includes developers, repositories, repository metrics,
-                languages, and companies.
-              </p>
-            </article>
-            <article class="feature-card">
-              <h3>Analytical role</h3>
-              <p>
-                The relational design separates profile information, repository metadata, and performance metrics so that queries can isolate ownership, repository activity, and language signals more clearly.
-              </p>
-            </article>
-            <article class="feature-card">
-              <h3>Important limitation</h3>
-              <p>
-                The repository metadata file has much wider coverage than the separate GitHub users file. That mismatch is why the live analysis relies on the full repository source.
-              </p>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section class="section" id="findings">
-        <div class="section-heading">
-          <p class="eyebrow">Findings</p>
-          <h2>Main takeaways from the analysis</h2>
+          <p class="eyebrow">Site Map</p>
+          <h2>Explore the project by page</h2>
         </div>
         <div class="feature-grid">
           <article class="feature-card">
-            <h3>Visibility is concentrated</h3>
-            <p>
-              A small number of organization-backed repositories drive most of the
-              stars and forks in the sample.
-            </p>
+            <h3><a href="analysis.html">Analysis</a></h3>
+            <p>Interactive charts, filters, KPI cards, and repository spotlight views built from the cleaned full dataset.</p>
           </article>
           <article class="feature-card">
-            <h3>Python dominates the sample</h3>
-            <p>
-              Most repositories in the curated dataset use Python, which also
-              highlights the need for future language expansion.
-            </p>
+            <h3><a href="model.html">Data Model</a></h3>
+            <p>Schema design, source integration strategy, SQL view definitions, and methodology notes from the project.</p>
           </article>
           <article class="feature-card">
-            <h3>Most projects are early stage</h3>
-            <p>
-              The impact tier breakdown shows a long tail of repositories with low
-              visibility and only a few standout projects.
-            </p>
+            <h3><a href="findings.html">Findings</a></h3>
+            <p>Main conclusions, data-quality challenges, and future work drawn directly from the final presentation.</p>
           </article>
           <article class="feature-card">
-            <h3>README usage is high</h3>
-            <p>
-              README coverage is strong in the repository source, which helps explain
-              why many projects still look documented even when their engagement is low.
-            </p>
-          </article>
-        </div>
-      </section>
-
-      <section class="section" id="methods">
-        <div class="section-heading">
-          <p class="eyebrow">Methodology</p>
-          <h2>How the SQL analysis was designed</h2>
-        </div>
-        <div class="feature-grid">
-          <article class="feature-card">
-            <h3>Popularity ranking</h3>
-            <p>
-              Query 1 uses <code>DENSE_RANK()</code> over stars and forks to rank repositories by visibility across owners and languages.
-            </p>
-          </article>
-          <article class="feature-card">
-            <h3>Active lifespan</h3>
-            <p>
-              Query 2 uses <code>DATEDIFF()</code> to measure the number of days between repository creation and last push.
-            </p>
-          </article>
-          <article class="feature-card">
-            <h3>Impact classification</h3>
-            <p>
-              Query 3 uses <code>CASE WHEN</code> logic to classify repositories into impact tiers using star thresholds.
-            </p>
-          </article>
-          <article class="feature-card">
-            <h3>Developer productivity</h3>
-            <p>
-              Query 4 uses <code>COUNT</code>, <code>SUM</code>, and <code>AVG</code> with <code>GROUP BY</code> to compare owners by total repositories, stars, forks, and average commits.
-            </p>
-          </article>
-          <article class="feature-card">
-            <h3>Above-average developers</h3>
-            <p>
-              Query 5 uses two CTEs and a <code>CROSS JOIN</code> to identify developers whose repository counts exceed the sample mean.
-            </p>
-          </article>
-          <article class="feature-card">
-            <h3>Cross-entity reporting</h3>
-            <p>
-              Queries 6 and 7 use a five-table join and a reusable SQL view to precompute <code>active_days</code> and <code>impact_level</code> for downstream analysis.
-            </p>
-          </article>
-        </div>
-      </section>
-
-
-      <section class="section" id="deliverables">
-        <div class="section-heading">
-          <p class="eyebrow">Deliverables</p>
-          <h2>Project files and report access</h2>
-        </div>
-        <div class="feature-grid">
-          <article class="feature-card">
-            <h3>SQL schema</h3>
-            <p><a href="sql/github_db_table.final.sql">Open table creation script</a></p>
-          </article>
-          <article class="feature-card">
-            <h3>SQL analysis queries</h3>
-            <p><a href="sql/github_db_querys.final.sql">Open analytical queries</a></p>
-          </article>
-          <article class="feature-card">
-            <h3>Project guide</h3>
-            <p><a href="guide.html">Open the companion guide page</a></p>
-          </article>
-          <article class="feature-card">
-            <h3>Published Power BI report</h3>
-            <p id="powerbi-link-slot">
-              Add your published Power BI URL in <code>app.js</code> and this section
-              will turn into a live link.
-            </p>
+            <h3><a href="deliverables.html">Deliverables</a></h3>
+            <p>SQL scripts, prepared BI datasets, published Power BI link, and supporting documents for presentation or review.</p>
           </article>
         </div>
       </section>
@@ -484,7 +179,5 @@
     <footer class="footer">
       <p>Open-source repository analysis built with SQL, cleaned metadata, and interactive web visualization.</p>
     </footer>
-
-    <script src="app.js"></script>
   </body>
 </html>
