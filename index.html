@@ -6,7 +6,7 @@
     <title>Open Source Repository Intelligence</title>
     <meta
       name="description"
-      content="Interactive portfolio website for a SQL and BI project on open-source repository activity."
+      content="Research website for a SQL and BI project on open-source repository activity and repository quality patterns."
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -22,45 +22,46 @@
         <div class="brand">Open Source Repository Intelligence</div>
         <div class="nav-links">
           <a href="#overview">Overview</a>
-          <a href="#sources">Sources</a>
-          <a href="#dashboard">Dashboard</a>
-          <a href="#powerbi-version">Power BI</a>
+          <a href="#questions">Questions</a>
+          <a href="#sources">Data</a>
+          <a href="#dashboard">Analysis</a>
           <a href="#model">Data Model</a>
+          <a href="#findings">Findings</a>
           <a href="#deliverables">Deliverables</a>
         </div>
       </nav>
 
       <section class="hero-grid">
         <div class="hero-copy">
-          <p class="eyebrow">SQL + BI Portfolio Project</p>
-          <h1>A clear project story with a built-in dashboard</h1>
+          <p class="eyebrow">Open-Source Repository Research</p>
+          <h1>How visible, maintained, and documented are open-source repositories?</h1>
           <p class="lede">
-            This website presents a relational database project built on public
-            open-source repository and developer data. It includes the project
-            summary, an interactive dashboard built directly into the page, the
-            data model, and the final SQL deliverables.
+            This project studies repository visibility, lifecycle, documentation,
+            and community health using public GitHub metadata. The site brings
+            together the research question, data scope, analytical views, schema
+            design, and final SQL and BI outputs.
           </p>
           <div class="cta-row">
-            <a class="button primary" href="#dashboard">Open Dashboard</a>
-            <a class="button secondary" href="#powerbi-version">Power BI Version</a>
+            <a class="button primary" href="#questions">Research Questions</a>
+            <a class="button secondary" href="#dashboard">Open Analysis</a>
           </div>
         </div>
 
         <aside class="hero-panel">
           <div class="status-card">
-            <span class="status-label">What this site does</span>
-            <strong>Explains the project clearly</strong>
-            <p>Overview, dashboard, schema, findings, and deliverables are separated into distinct sections.</p>
+            <span class="status-label">Research Scope</span>
+            <strong>14,644 repositories</strong>
+            <p>The main analysis uses the full Kaggle repository metadata source rather than a tiny classroom subset.</p>
           </div>
           <div class="status-card">
-            <span class="status-label">What the dashboard does</span>
-            <strong>Shows interactive BI directly here</strong>
-            <p>No external Power BI link is required to explore the main results.</p>
+            <span class="status-label">Core Themes</span>
+            <strong>Visibility, quality, lifecycle</strong>
+            <p>The analysis focuses on stars, forks, active lifespan, README coverage, ownership concentration, and health scores.</p>
           </div>
           <div class="status-card">
-            <span class="status-label">Optional future upgrade</span>
-            <strong>Offer both BI versions</strong>
-            <p>The website can keep its built-in dashboard while also linking to a formal Power BI report for class or interview use.</p>
+            <span class="status-label">Methods</span>
+            <strong>SQL, cleaned BI dataset, web analytics</strong>
+            <p>The project combines relational modeling, query design, data cleaning, and interactive visual analysis in one workflow.</p>
           </div>
         </aside>
       </section>
@@ -70,28 +71,52 @@
       <section class="section" id="overview">
         <div class="section-heading">
           <p class="eyebrow">Overview</p>
-          <h2>What each section is responsible for</h2>
+          <h2>What this project investigates</h2>
         </div>
         <div class="feature-grid">
           <article class="feature-card">
-            <h3>Project Overview</h3>
+            <h3>Repository visibility</h3>
             <p>
-              Explains the problem, the data sources, and what the project is trying
-              to analyze.
+              The project evaluates how stars and forks are distributed across repositories and whether a small number of projects dominate attention.
             </p>
           </article>
           <article class="feature-card">
-            <h3>Interactive Dashboard</h3>
+            <h3>Maintenance signals</h3>
             <p>
-              Shows KPI cards, rankings, distributions, and filtered repository
-              highlights built from the full repository metadata source.
+              It studies active lifespan, commit activity, and repository longevity to understand how maintenance patterns vary.
             </p>
           </article>
           <article class="feature-card">
-            <h3>Data Model and Files</h3>
+            <h3>Documentation and quality</h3>
             <p>
-              Shows the schema design, the main findings, and links to the SQL
-              scripts and supporting project files.
+              It compares README coverage and community health metrics to see how well repositories are documented and structured.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="questions">
+        <div class="section-heading">
+          <p class="eyebrow">Research Questions</p>
+          <h2>What the analysis is trying to answer</h2>
+        </div>
+        <div class="feature-grid">
+          <article class="feature-card">
+            <h3>How concentrated is visibility?</h3>
+            <p>
+              Are stars and forks spread broadly across repositories, or concentrated in a small set of highly visible projects and owners?
+            </p>
+          </article>
+          <article class="feature-card">
+            <h3>What does repository maturity look like?</h3>
+            <p>
+              Do most repositories remain early stage, or do they show sustained activity and stronger signs of long-term maintenance?
+            </p>
+          </article>
+          <article class="feature-card">
+            <h3>How strong are documentation signals?</h3>
+            <p>
+              Does README coverage remain high even among lower-impact repositories, and how does that compare with community health measures?
             </p>
           </article>
         </div>
@@ -99,30 +124,26 @@
 
       <section class="section" id="sources">
         <div class="section-heading">
-          <p class="eyebrow">Sources</p>
-          <h2>What data is used where</h2>
+          <p class="eyebrow">Data</p>
+          <h2>How the datasets are used</h2>
         </div>
         <div class="feature-grid">
           <article class="feature-card">
-            <h3>Website dashboard</h3>
+            <h3>Repository metadata source</h3>
             <p>
-              The built-in dashboard uses the full repository metadata source with
-              14,644 repositories.
+              The main analysis uses the full repository metadata file with 14,644 repositories, which provides stars, forks, commits, README status, and lifecycle fields.
             </p>
           </article>
           <article class="feature-card">
-            <h3>Database project</h3>
+            <h3>GitHub users source</h3>
             <p>
-              The relational schema uses both repository metadata and GitHub users
-              data to demonstrate normalization, joins, and source limitations.
+              A separate GitHub users dataset supports the relational schema and helps illustrate joins, normalization, and cross-source entity matching.
             </p>
           </article>
           <article class="feature-card">
-            <h3>Important limitation</h3>
+            <h3>Key limitation</h3>
             <p>
-              Only about 200 repositories match the separate users file, so the
-              website focuses on repository-wide analytics rather than merged
-              profile-level coverage.
+              Only about 200 repositories match across the two sources, so the public-facing analysis emphasizes repository-level patterns instead of full profile-level integration.
             </p>
           </article>
         </div>
@@ -131,37 +152,31 @@
       <section class="section dashboard-section" id="dashboard">
         <div class="section-heading split">
           <div>
-            <p class="eyebrow">Dashboard</p>
-            <h2>Interactive repository analytics</h2>
+            <p class="eyebrow">Analysis</p>
+            <h2>Interactive views of repository behavior</h2>
           </div>
           <p class="section-note">
-            This dashboard is driven by the full Kaggle repository metadata file
-            with 14,644 repositories.
+            All charts in this section are driven by the cleaned full repository metadata source.
           </p>
         </div>
 
         <div class="dashboard-intro">
           <article class="feature-card">
-            <h3>What this section does</h3>
+            <h3>Distribution patterns</h3>
             <p>
-              This is the analytical core of the project. It combines KPI cards,
-              distribution views, concentration analysis, lifecycle patterns, and a
-              filtered repository spotlight.
+              Use the star, fork, impact, and language views to see whether repository attention is broad or highly concentrated.
             </p>
           </article>
           <article class="feature-card">
-            <h3>How to use the filters</h3>
+            <h3>Lifecycle patterns</h3>
             <p>
-              First choose a language or leave it on <code>All</code>. Then apply an
-              impact filter if you want to focus on early-stage or high-visibility
-              repositories. All charts update together.
+              The lifecycle curve, active-days rankings, and commit summaries help compare early-stage repositories with longer-lived projects.
             </p>
           </article>
           <article class="feature-card">
-            <h3>What to look for</h3>
+            <h3>Quality signals</h3>
             <p>
-              Pay attention to concentration of stars, language dominance, README
-              coverage, and how long active repositories tend to survive.
+              README coverage and community health views show whether documentation quality stays strong even when visibility is uneven.
             </p>
           </article>
         </div>
@@ -225,10 +240,12 @@
         <div class="viz-grid">
           <article class="panel">
             <div class="panel-head">
-              <h3>Star Count Buckets</h3>
-              <span class="panel-subtitle">How visible repositories are</span>
+              <h3>Log Visibility Scatter</h3>
+              <span class="panel-subtitle">Stars vs forks on a log-scaled view</span>
             </div>
-            <div id="stars-bucket-chart" class="bar-chart compact-chart"></div>
+            <div class="svg-shell">
+              <svg id="visibility-scatter" viewBox="0 0 560 320" aria-label="Log visibility scatter plot"></svg>
+            </div>
           </article>
 
           <article class="panel">
@@ -243,10 +260,12 @@
         <div class="viz-grid viz-grid-bottom">
           <article class="panel panel-wide">
             <div class="panel-head">
-              <h3>Repository Lifecycle Buckets</h3>
-              <span class="panel-subtitle">How long repositories stay active</span>
+              <h3>Cumulative Lifecycle Curve</h3>
+              <span class="panel-subtitle">How quickly repository activity ages out</span>
             </div>
-            <div id="lifecycle-chart" class="bar-chart"></div>
+            <div class="svg-shell">
+              <svg id="lifecycle-line" viewBox="0 0 560 320" aria-label="Lifecycle line chart"></svg>
+            </div>
           </article>
 
           <article class="panel">
@@ -260,10 +279,10 @@
         <div class="viz-grid">
           <article class="panel">
             <div class="panel-head">
-              <h3>Community Health Bands</h3>
-              <span class="panel-subtitle">Repository counts by health score</span>
+              <h3>Community Health Grid</h3>
+              <span class="panel-subtitle">Tile view of quality distribution</span>
             </div>
-            <div id="health-chart" class="bar-chart compact-chart"></div>
+            <div id="health-grid" class="health-grid"></div>
           </article>
 
           <article class="panel">
@@ -300,48 +319,10 @@
         </article>
       </section>
 
-      <section class="section" id="powerbi-version">
-        <div class="section-heading split">
-          <div>
-            <p class="eyebrow">Alternate BI Version</p>
-            <h2>Formal Power BI report</h2>
-          </div>
-          <p class="section-note">
-            Use this as the polished BI companion to the built-in web dashboard.
-          </p>
-        </div>
-        <div class="feature-grid">
-          <article class="feature-card">
-            <h3>Why keep both</h3>
-            <p>
-              The built-in dashboard makes the website self-contained, while the
-              Power BI version gives you a standard BI tool deliverable for class,
-              interviews, or portfolio comparison.
-            </p>
-          </article>
-          <article class="feature-card">
-            <h3>What to use in Power BI</h3>
-            <p>
-              Build the report from
-              <a href="data/repository_dashboard_full.csv">data/repository_dashboard_full.csv</a>
-              and follow
-              <a href="docs/powerbi-quickstart.md">docs/powerbi-quickstart.md</a>.
-            </p>
-          </article>
-          <article class="feature-card">
-            <h3>Report link</h3>
-            <p id="powerbi-link-slot">
-              Add your published Power BI URL in <code>app.js</code> and this section
-              will turn into a live link.
-            </p>
-          </article>
-        </div>
-      </section>
-
       <section class="section" id="model">
         <div class="section-heading">
           <p class="eyebrow">Data Model</p>
-          <h2>How the database is structured</h2>
+          <h2>How the database supports the analysis</h2>
         </div>
         <div class="model-grid">
           <div class="diagram-card">
@@ -359,19 +340,15 @@
               </p>
             </article>
             <article class="feature-card">
-              <h3>Why this matters</h3>
+              <h3>Analytical role</h3>
               <p>
-                The relational design separates profile information, repository
-                metadata, and performance metrics so the analysis is easier to query
-                and explain.
+                The relational design separates profile information, repository metadata, and performance metrics so that queries can isolate ownership, repository activity, and language signals more clearly.
               </p>
             </article>
             <article class="feature-card">
-              <h3>Important source limitation</h3>
+              <h3>Important limitation</h3>
               <p>
-                The repo metadata file has 14,644 repositories, but only about 200
-                repositories match the separate GitHub users file. Because of that,
-                the live dashboard focuses on the full repository source.
+                The repository metadata file has much wider coverage than the separate GitHub users file. That mismatch is why the live analysis relies on the full repository source.
               </p>
             </article>
           </div>
@@ -415,70 +392,10 @@
         </div>
       </section>
 
-      <section class="section" id="implementation">
-        <div class="section-heading">
-          <p class="eyebrow">Implementation</p>
-          <h2>How the built-in BI works</h2>
-        </div>
-        <div class="feature-grid">
-          <article class="feature-card">
-            <h3>What it is</h3>
-            <p>
-              This is not actual Power BI embedded in the page. It is a custom web
-              dashboard built with HTML, CSS, JavaScript, and a JSON data file.
-            </p>
-          </article>
-          <article class="feature-card">
-            <h3>Why use it</h3>
-            <p>
-              It makes the website self-contained, so visitors can explore the
-              results without leaving the page or needing a published BI link.
-            </p>
-          </article>
-          <article class="feature-card">
-            <h3>Power BI still fits</h3>
-            <p>
-              You can still build a formal Power BI version separately for class,
-              interviews, or portfolio comparison using the same cleaned dataset.
-            </p>
-          </article>
-        </div>
-      </section>
-
-      <section class="section" id="powerbi-plan">
-        <div class="section-heading">
-          <p class="eyebrow">Power BI Build</p>
-          <h2>What the formal Power BI version should include</h2>
-        </div>
-        <div class="feature-grid">
-          <article class="feature-card">
-            <h3>Page 1: Executive Overview</h3>
-            <p>
-              KPI cards, top repositories, top owners, language mix, and impact
-              tier distribution from the full repository dataset.
-            </p>
-          </article>
-          <article class="feature-card">
-            <h3>Page 2: Repository Quality and Lifecycle</h3>
-            <p>
-              Lifecycle buckets, README coverage, community health bands, and a
-              repository detail table.
-            </p>
-          </article>
-          <article class="feature-card">
-            <h3>Page 3: Methodology and Data Limits</h3>
-            <p>
-              Explain the two-source design, the low cross-source match rate, and
-              why the main BI layer uses the full repository metadata source.
-            </p>
-          </article>
-        </div>
-      </section>
-
       <section class="section" id="deliverables">
         <div class="section-heading">
           <p class="eyebrow">Deliverables</p>
-          <h2>Project files and next actions</h2>
+          <h2>Project files and report access</h2>
         </div>
         <div class="feature-grid">
           <article class="feature-card">
@@ -493,12 +410,19 @@
             <h3>Project guide</h3>
             <p><a href="guide.html">Open the companion guide page</a></p>
           </article>
+          <article class="feature-card">
+            <h3>Published Power BI report</h3>
+            <p id="powerbi-link-slot">
+              Add your published Power BI URL in <code>app.js</code> and this section
+              will turn into a live link.
+            </p>
+          </article>
         </div>
       </section>
     </main>
 
     <footer class="footer">
-      <p>Designed as a clearer portfolio website with a built-in BI dashboard.</p>
+      <p>Open-source repository analysis built with SQL, cleaned metadata, and interactive web visualization.</p>
     </footer>
 
     <script src="app.js"></script>

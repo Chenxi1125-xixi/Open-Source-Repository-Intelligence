@@ -200,6 +200,46 @@ function renderStarsBucketChart(rows) {
   renderBarChart("stars-bucket-chart", buckets, "count", (item) => item.label);
 }
 
+function renderVisibilityScatter(rows) {
+  const svg = document.getElementById("visibility-scatter");
+  if (!svg) return;
+
+  const width = 560;
+  const height = 320;
+  const padding = 42;
+  const plotted = rows
+    .slice()
+    .sort((a, b) => b.stars - a.stars || b.forks - a.forks)
+    .slice(0, 60);
+  const maxStars = Math.max(...plotted.map((r) => Math.log10(r.stars + 1)), 1);
+  const maxForks = Math.max(...plotted.map((r) => Math.log10(r.forks + 1)), 1);
+  const colorMap = {
+    "High Impact": "#12343b",
+    "Medium Impact": "#4b6a88",
+    "Low Impact": "#c65d26",
+    "Early Stage": "#d8b98d"
+  };
+
+  const circles = plotted.map((row) => {
+    const x = padding + (Math.log10(row.forks + 1) / maxForks) * (width - padding * 2);
+    const y = height - padding - (Math.log10(row.stars + 1) / maxStars) * (height - padding * 2);
+    const radius = 4 + Math.min(10, Math.sqrt(row.commits) / 3);
+    return `
+      <circle cx="${x.toFixed(2)}" cy="${y.toFixed(2)}" r="${radius.toFixed(2)}" fill="${colorMap[row.impact] || "#59636e"}" opacity="0.72">
+        <title>${row.repo} | Stars ${row.stars} | Forks ${row.forks} | Commits ${row.commits}</title>
+      </circle>
+    `;
+  }).join("");
+
+  svg.innerHTML = `
+    <line x1="${padding}" y1="${height - padding}" x2="${width - padding}" y2="${height - padding}" stroke="#59636e" stroke-width="1.2"></line>
+    <line x1="${padding}" y1="${padding}" x2="${padding}" y2="${height - padding}" stroke="#59636e" stroke-width="1.2"></line>
+    <text x="${width - padding}" y="${height - 10}" text-anchor="end" fill="#59636e" font-size="12">Forks (log scale)</text>
+    <text x="16" y="${padding}" fill="#59636e" font-size="12">Stars (log scale)</text>
+    ${circles}
+  `;
+}
+
 function renderLifespanChart(rows) {
   const data = [...rows]
     .sort((a, b) => b.activeDays - a.activeDays)
@@ -226,6 +266,54 @@ function renderLifecycleChart(rows) {
   });
 
   renderBarChart("lifecycle-chart", buckets, "count", (item) => item.label);
+}
+
+function renderLifecycleLine(rows) {
+  const svg = document.getElementById("lifecycle-line");
+  if (!svg) return;
+
+  const width = 560;
+  const height = 320;
+  const padding = 42;
+  const segments = [
+    { label: "0-30", test: (d) => d <= 30 },
+    { label: "31-180", test: (d) => d > 30 && d <= 180 },
+    { label: "181-365", test: (d) => d > 180 && d <= 365 },
+    { label: "1-3y", test: (d) => d > 365 && d <= 1095 },
+    { label: "3y+", test: (d) => d > 1095 }
+  ];
+
+  const total = rows.length || 1;
+  let cumulative = 0;
+  const points = segments.map((segment) => {
+    const count = rows.filter((row) => segment.test(row.activeDays)).length;
+    cumulative += count;
+    return { label: segment.label, share: cumulative / total };
+  });
+
+  const path = points.map((point, index) => {
+    const x = padding + (index / (points.length - 1)) * (width - padding * 2);
+    const y = height - padding - point.share * (height - padding * 2);
+    return `${index === 0 ? "M" : "L"} ${x.toFixed(2)} ${y.toFixed(2)}`;
+  }).join(" ");
+
+  const dots = points.map((point, index) => {
+    const x = padding + (index / (points.length - 1)) * (width - padding * 2);
+    const y = height - padding - point.share * (height - padding * 2);
+    return `
+      <circle cx="${x.toFixed(2)}" cy="${y.toFixed(2)}" r="5" fill="#c65d26"></circle>
+      <text x="${x.toFixed(2)}" y="${height - padding + 18}" text-anchor="middle" fill="#59636e" font-size="11">${point.label}</text>
+      <text x="${x.toFixed(2)}" y="${(y - 10).toFixed(2)}" text-anchor="middle" fill="#12343b" font-size="11">${Math.round(point.share * 100)}%</text>
+    `;
+  }).join("");
+
+  svg.innerHTML = `
+    <line x1="${padding}" y1="${height - padding}" x2="${width - padding}" y2="${height - padding}" stroke="#59636e" stroke-width="1.2"></line>
+    <line x1="${padding}" y1="${padding}" x2="${padding}" y2="${height - padding}" stroke="#59636e" stroke-width="1.2"></line>
+    <path d="${path}" fill="none" stroke="#12343b" stroke-width="3"></path>
+    ${dots}
+    <text x="18" y="${padding}" fill="#59636e" font-size="12">Cumulative share</text>
+  `;
 }
 
 function renderReadmeSummary(rows) {
@@ -269,6 +357,41 @@ function renderHealthChart(rows) {
   });
 
   renderBarChart("health-chart", bands, "count", (item) => item.label);
+}
+
+function renderHealthGrid(rows) {
+  const grid = document.getElementById("health-grid");
+  if (!grid) return;
+
+  const colors = {
+    zero: "#efe2c6",
+    low: "#e8c89a",
+    medium: "#d9894a",
+    strong: "#4b6a88",
+    excellent: "#12343b"
+  };
+
+  const sampled = rows.slice(0, 120).map((row) => {
+    const score = row.communityHealth;
+    if (score === 0) return colors.zero;
+    if (score <= 25) return colors.low;
+    if (score <= 50) return colors.medium;
+    if (score <= 75) return colors.strong;
+    return colors.excellent;
+  });
+
+  grid.innerHTML = `
+    <div class="health-tiles">
+      ${sampled.map((color) => `<span class="health-tile" style="background:${color}"></span>`).join("")}
+    </div>
+    <div class="health-key">
+      <div class="legend-item"><span class="legend-dot" style="background:${colors.zero}"></span><span>0</span></div>
+      <div class="legend-item"><span class="legend-dot" style="background:${colors.low}"></span><span>1-25</span></div>
+      <div class="legend-item"><span class="legend-dot" style="background:${colors.medium}"></span><span>26-50</span></div>
+      <div class="legend-item"><span class="legend-dot" style="background:${colors.strong}"></span><span>51-75</span></div>
+      <div class="legend-item"><span class="legend-dot" style="background:${colors.excellent}"></span><span>76-100</span></div>
+    </div>
+  `;
 }
 
 function renderImpactDonut(rows) {
@@ -377,10 +500,10 @@ function renderDashboard() {
   renderDeveloperChart(rows);
   renderOwnerVolumeChart(rows);
   renderLanguageChart();
-  renderStarsBucketChart(rows);
-  renderLifecycleChart(rows);
+  renderVisibilityScatter(rows);
+  renderLifecycleLine(rows);
   renderReadmeSummary(rows);
-  renderHealthChart(rows);
+  renderHealthGrid(rows);
   renderLifespanChart(rows);
   renderImpactDonut(rows);
   renderInsightSummary(rows);

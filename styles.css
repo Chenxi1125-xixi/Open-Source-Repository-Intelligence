@@ -435,6 +435,20 @@ td {
   background: linear-gradient(90deg, var(--ink), var(--accent));
 }
 
+.svg-shell {
+  width: 100%;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.66);
+  padding: 8px;
+}
+
+.svg-shell svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
 .donut-wrap {
   display: grid;
   gap: 16px;
@@ -479,6 +493,29 @@ td {
   width: 14px;
   height: 14px;
   border-radius: 50%;
+}
+
+.health-grid {
+  display: grid;
+  gap: 16px;
+}
+
+.health-tiles {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.health-tile {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 6px;
+  display: block;
+}
+
+.health-key {
+  display: grid;
+  gap: 10px;
 }
 
 .table-panel {
