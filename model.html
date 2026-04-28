@@ -79,26 +79,189 @@
           <article class="feature-card">
             <h3>Popularity ranking</h3>
             <p>Query 1 uses <code>DENSE_RANK()</code> over stars and forks to rank repositories by visibility across owners and languages.</p>
+            <p class="source-link"><a href="#sql-query-1">Jump to SQL snippet</a></p>
           </article>
           <article class="feature-card">
             <h3>Active lifespan</h3>
             <p>Query 2 uses <code>DATEDIFF()</code> to measure the number of days between repository creation and last push.</p>
+            <p class="source-link"><a href="#sql-query-2">Jump to SQL snippet</a></p>
           </article>
           <article class="feature-card">
             <h3>Impact classification</h3>
             <p>Query 3 uses <code>CASE WHEN</code> logic to classify repositories into impact tiers using star thresholds.</p>
+            <p class="source-link"><a href="#sql-query-3">Jump to SQL snippet</a></p>
           </article>
           <article class="feature-card">
             <h3>Developer productivity</h3>
             <p>Query 4 uses <code>COUNT</code>, <code>SUM</code>, and <code>AVG</code> with <code>GROUP BY</code> to compare owners by total repositories, stars, forks, and average commits.</p>
+            <p class="source-link"><a href="#sql-query-4">Jump to SQL snippet</a></p>
           </article>
           <article class="feature-card">
             <h3>Above-average developers</h3>
             <p>Query 5 uses two CTEs and a <code>CROSS JOIN</code> to identify developers whose repository counts exceed the sample mean.</p>
+            <p class="source-link"><a href="#sql-query-5">Jump to SQL snippet</a></p>
           </article>
           <article class="feature-card">
             <h3>Reusable SQL view</h3>
             <p>Queries 6 and 7 use a five-table join and a reusable view to precompute <code>active_days</code> and <code>impact_level</code> for downstream reporting.</p>
+            <p class="source-link"><a href="#sql-query-6-7">Jump to SQL snippet</a></p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-heading">
+          <p class="eyebrow">SQL Snippets</p>
+          <h2>Click a method above to jump directly here</h2>
+        </div>
+        <div class="feature-stack code-stack">
+          <article class="panel code-panel" id="sql-query-1">
+            <div class="panel-head">
+              <h3>Query 1: Popularity ranking</h3>
+              <span class="panel-subtitle">DENSE_RANK over stars and forks</span>
+            </div>
+            <pre class="code-block"><code>SELECT
+    r.repo_name,
+    d.login AS owner_login,
+    l.language_name,
+    m.stars,
+    m.forks,
+    DENSE_RANK() OVER (ORDER BY m.stars DESC, m.forks DESC) AS popularity_rank
+FROM repositories r
+JOIN developers d ON r.developer_id = d.developer_id
+JOIN languages l ON r.language_id = l.language_id
+JOIN repository_metrics m ON r.repo_id = m.repo_id
+ORDER BY popularity_rank, r.repo_name;</code></pre>
+          </article>
+
+          <article class="panel code-panel" id="sql-query-2">
+            <div class="panel-head">
+              <h3>Query 2: Active lifespan</h3>
+              <span class="panel-subtitle">DATEDIFF between creation and last push</span>
+            </div>
+            <pre class="code-block"><code>SELECT
+    r.repo_name,
+    d.login AS owner_login,
+    r.created_date,
+    r.pushed_date,
+    DATEDIFF(r.pushed_date, r.created_date) AS active_days
+FROM repositories r
+JOIN developers d ON r.developer_id = d.developer_id
+WHERE r.created_date IS NOT NULL
+  AND r.pushed_date IS NOT NULL
+ORDER BY active_days DESC;</code></pre>
+          </article>
+
+          <article class="panel code-panel" id="sql-query-3">
+            <div class="panel-head">
+              <h3>Query 3: Impact classification</h3>
+              <span class="panel-subtitle">CASE WHEN star thresholds</span>
+            </div>
+            <pre class="code-block"><code>SELECT
+    r.repo_name,
+    d.login AS owner_login,
+    m.stars,
+    m.forks,
+    CASE
+        WHEN m.stars >= 10 THEN 'High Popularity'
+        WHEN m.stars >= 3 THEN 'Medium Popularity'
+        WHEN m.stars >= 1 THEN 'Low Popularity'
+        ELSE 'No Stars Yet'
+    END AS popularity_category
+FROM repositories r
+JOIN developers d ON r.developer_id = d.developer_id
+JOIN repository_metrics m ON r.repo_id = m.repo_id
+ORDER BY m.stars DESC, m.forks DESC;</code></pre>
+          </article>
+
+          <article class="panel code-panel" id="sql-query-4">
+            <div class="panel-head">
+              <h3>Query 4: Developer productivity</h3>
+              <span class="panel-subtitle">COUNT, SUM, AVG with GROUP BY</span>
+            </div>
+            <pre class="code-block"><code>SELECT
+    d.login AS owner_login,
+    COUNT(r.repo_id) AS total_repositories,
+    SUM(m.stars) AS total_stars,
+    SUM(m.forks) AS total_forks,
+    ROUND(AVG(m.commit_count), 2) AS avg_commits
+FROM developers d
+JOIN repositories r ON d.developer_id = r.developer_id
+JOIN repository_metrics m ON r.repo_id = m.repo_id
+GROUP BY d.developer_id, d.login
+ORDER BY total_stars DESC, total_repositories DESC;</code></pre>
+          </article>
+
+          <article class="panel code-panel" id="sql-query-5">
+            <div class="panel-head">
+              <h3>Query 5: Above-average developers</h3>
+              <span class="panel-subtitle">CTEs and CROSS JOIN</span>
+            </div>
+            <pre class="code-block"><code>WITH developer_repo_counts AS (
+    SELECT
+        d.developer_id,
+        d.login,
+        COUNT(r.repo_id) AS repo_count
+    FROM developers d
+    LEFT JOIN repositories r ON d.developer_id = r.developer_id
+    GROUP BY d.developer_id, d.login
+),
+average_repo_count AS (
+    SELECT AVG(repo_count) AS avg_repo_count
+    FROM developer_repo_counts
+)
+SELECT
+    drc.login,
+    drc.repo_count,
+    ROUND(arc.avg_repo_count, 2) AS sample_average_repo_count
+FROM developer_repo_counts drc
+CROSS JOIN average_repo_count arc
+WHERE drc.repo_count > arc.avg_repo_count
+ORDER BY drc.repo_count DESC;</code></pre>
+          </article>
+
+          <article class="panel code-panel" id="sql-query-6-7">
+            <div class="panel-head">
+              <h3>Queries 6 and 7: Reusable SQL view</h3>
+              <span class="panel-subtitle">Five-table join and analysis view</span>
+            </div>
+            <pre class="code-block"><code>CREATE OR REPLACE VIEW repository_analysis_view AS
+SELECT
+    d.login AS owner_login,
+    d.full_name,
+    c.company_name,
+    d.location,
+    d.followers,
+    d.public_repos,
+    r.repo_name,
+    r.github_url,
+    l.language_name,
+    r.has_readme,
+    r.created_date,
+    r.updated_date,
+    r.pushed_date,
+    DATEDIFF(r.pushed_date, r.created_date) AS active_days,
+    m.stars,
+    m.forks,
+    m.watchers,
+    m.open_issues_count,
+    m.contributors_count,
+    m.release_count,
+    m.commit_count,
+    m.file_count,
+    m.community_health_percentage,
+    CASE
+        WHEN m.stars >= 10 THEN 'High Impact'
+        WHEN m.stars >= 3 THEN 'Medium Impact'
+        WHEN m.stars >= 1 THEN 'Low Impact'
+        ELSE 'Early Stage'
+    END AS impact_level
+FROM developers d
+LEFT JOIN companies c ON d.company_id = c.company_id
+JOIN repositories r ON d.developer_id = r.developer_id
+JOIN languages l ON r.language_id = l.language_id
+JOIN repository_metrics m ON r.repo_id = m.repo_id;</code></pre>
+            <p class="source-link"><a href="sql/github_db_querys.final.sql">Open full SQL file</a></p>
           </article>
         </div>
       </section>

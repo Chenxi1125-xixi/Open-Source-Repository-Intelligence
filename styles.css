@@ -615,3 +615,27 @@ th {
     grid-template-columns: 1fr;
   }
 }
+
+.code-stack {
+  display: grid;
+  gap: 18px;
+}
+
+.code-panel {
+  scroll-margin-top: 24px;
+}
+
+.code-block {
+  margin: 0;
+  padding: 18px;
+  overflow-x: auto;
+  border-radius: var(--radius-md);
+  background: rgba(18, 52, 59, 0.94);
+  color: #f7f1e6;
+  font-size: 0.92rem;
+  line-height: 1.65;
+}
+
+.code-block code {
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+}
