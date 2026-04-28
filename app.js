@@ -371,14 +371,18 @@ function renderHealthGrid(rows) {
     excellent: "#12343b"
   };
 
-  const sampled = rows.slice(0, 120).map((row) => {
-    const score = row.communityHealth;
-    if (score === 0) return colors.zero;
-    if (score <= 25) return colors.low;
-    if (score <= 50) return colors.medium;
-    if (score <= 75) return colors.strong;
-    return colors.excellent;
-  });
+  const sampled = rows
+    .slice()
+    .sort((a, b) => b.stars - a.stars || b.communityHealth - a.communityHealth)
+    .slice(0, 120)
+    .map((row) => {
+      const score = row.communityHealth;
+      if (score === 0) return colors.zero;
+      if (score <= 25) return colors.low;
+      if (score <= 50) return colors.medium;
+      if (score <= 75) return colors.strong;
+      return colors.excellent;
+    });
 
   grid.innerHTML = `
     <div class="health-tiles">
@@ -400,12 +404,13 @@ function renderImpactDonut(rows) {
       acc[row.impact] = (acc[row.impact] || 0) + 1;
       return acc;
     },
-    { "High Impact": 0, "Low Impact": 0, "Early Stage": 0 }
+    { "High Impact": 0, "Medium Impact": 0, "Low Impact": 0, "Early Stage": 0 }
   );
 
   const total = rows.length || 1;
   const slices = [
     { name: "High Impact", value: counts["High Impact"], color: "#12343b" },
+    { name: "Medium Impact", value: counts["Medium Impact"], color: "#4b6a88" },
     { name: "Low Impact", value: counts["Low Impact"], color: "#c65d26" },
     { name: "Early Stage", value: counts["Early Stage"], color: "#d8b98d" }
   ];

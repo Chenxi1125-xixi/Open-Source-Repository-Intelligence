@@ -405,6 +405,26 @@ td {
   margin-bottom: 14px;
 }
 
+.figure-note {
+  margin: 14px 0 0;
+  font-size: 0.92rem;
+  color: var(--muted);
+}
+
+.figure-note strong {
+  color: var(--ink);
+}
+
+.source-link {
+  margin-top: 12px;
+  font-size: 0.92rem;
+}
+
+.source-link a {
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
 .bar-chart {
   display: grid;
   gap: 12px;

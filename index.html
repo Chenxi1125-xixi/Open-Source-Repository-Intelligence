@@ -133,12 +133,14 @@
             <p>
               The main analysis uses the full repository metadata file with 14,644 repositories, which provides stars, forks, commits, README status, and lifecycle fields.
             </p>
+            <p class="source-link"><a href="https://www.kaggle.com/datasets/isaacoresanya/github-repository-metadata" target="_blank" rel="noreferrer">View Kaggle repository metadata source</a></p>
           </article>
           <article class="feature-card">
             <h3>GitHub users source</h3>
             <p>
               A separate GitHub users dataset supports the relational schema and helps illustrate joins, normalization, and cross-source entity matching.
             </p>
+            <p class="source-link"><a href="https://www.kaggle.com/datasets/donbarbos/github-users" target="_blank" rel="noreferrer">View Kaggle GitHub users source</a></p>
           </article>
           <article class="feature-card">
             <h3>Key limitation</h3>
@@ -218,6 +220,9 @@
               <div id="impact-donut" class="donut"></div>
               <div id="impact-legend" class="legend"></div>
             </div>
+            <p class="figure-note">
+              Impact levels follow the SQL view logic from the project: <strong>High Impact</strong> means at least 10 stars, <strong>Medium Impact</strong> means 3 to 9 stars, <strong>Low Impact</strong> means 1 to 2 stars, and <strong>Early Stage</strong> means 0 stars.
+            </p>
           </article>
         </div>
 
@@ -246,6 +251,9 @@
             <div class="svg-shell">
               <svg id="visibility-scatter" viewBox="0 0 560 320" aria-label="Log visibility scatter plot"></svg>
             </div>
+            <p class="figure-note">
+              Each point represents one repository in the filtered view. The x-axis uses log-scaled forks, the y-axis uses log-scaled stars, point size reflects commit volume, and point color follows the impact-level classification.
+            </p>
           </article>
 
           <article class="panel">
@@ -266,6 +274,9 @@
             <div class="svg-shell">
               <svg id="lifecycle-line" viewBox="0 0 560 320" aria-label="Lifecycle line chart"></svg>
             </div>
+            <p class="figure-note">
+              This curve shows the cumulative share of repositories that reach each active-days band, from 0 to 30 days through 3 or more years. It summarizes how quickly repository activity falls off over time.
+            </p>
           </article>
 
           <article class="panel">
@@ -283,6 +294,9 @@
               <span class="panel-subtitle">Tile view of quality distribution</span>
             </div>
             <div id="health-grid" class="health-grid"></div>
+            <p class="figure-note">
+              Each tile stands for one repository, up to 120 repositories in the current filtered view. Darker tiles indicate higher community-health scores, while lighter tiles indicate missing or weak health signals.
+            </p>
           </article>
 
           <article class="panel">
@@ -391,6 +405,52 @@
           </article>
         </div>
       </section>
+
+      <section class="section" id="methods">
+        <div class="section-heading">
+          <p class="eyebrow">Methodology</p>
+          <h2>How the SQL analysis was designed</h2>
+        </div>
+        <div class="feature-grid">
+          <article class="feature-card">
+            <h3>Popularity ranking</h3>
+            <p>
+              Query 1 uses <code>DENSE_RANK()</code> over stars and forks to rank repositories by visibility across owners and languages.
+            </p>
+          </article>
+          <article class="feature-card">
+            <h3>Active lifespan</h3>
+            <p>
+              Query 2 uses <code>DATEDIFF()</code> to measure the number of days between repository creation and last push.
+            </p>
+          </article>
+          <article class="feature-card">
+            <h3>Impact classification</h3>
+            <p>
+              Query 3 uses <code>CASE WHEN</code> logic to classify repositories into impact tiers using star thresholds.
+            </p>
+          </article>
+          <article class="feature-card">
+            <h3>Developer productivity</h3>
+            <p>
+              Query 4 uses <code>COUNT</code>, <code>SUM</code>, and <code>AVG</code> with <code>GROUP BY</code> to compare owners by total repositories, stars, forks, and average commits.
+            </p>
+          </article>
+          <article class="feature-card">
+            <h3>Above-average developers</h3>
+            <p>
+              Query 5 uses two CTEs and a <code>CROSS JOIN</code> to identify developers whose repository counts exceed the sample mean.
+            </p>
+          </article>
+          <article class="feature-card">
+            <h3>Cross-entity reporting</h3>
+            <p>
+              Queries 6 and 7 use a five-table join and a reusable SQL view to precompute <code>active_days</code> and <code>impact_level</code> for downstream analysis.
+            </p>
+          </article>
+        </div>
+      </section>
+
 
       <section class="section" id="deliverables">
         <div class="section-heading">
