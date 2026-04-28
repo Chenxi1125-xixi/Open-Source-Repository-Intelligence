@@ -12,6 +12,7 @@ This repo is structured to present the project as a polished portfolio piece ins
 - A detailed Power BI storyboard in `docs/powerbi-report-blueprint.md`
 - A field-by-field Power BI visual spec in `docs/powerbi-visual-spec.md`
 - A Power BI quickstart in `docs/powerbi-quickstart.md`
+- A final Power BI build plan in `docs/powerbi-final-build-plan.md`
 - A GitHub Pages launch guide in `docs/github-pages-launch.md`
 - A data dictionary in `docs/data-dictionary.md`
 - An EER diagram in `assets/schema-diagram.png`
