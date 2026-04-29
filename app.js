@@ -80,16 +80,34 @@ function renderKpis(rows) {
   const readmeCoverage = rows.length
     ? Math.round((rows.filter((row) => row.hasReadme === 1).length / rows.length) * 100)
     : 0;
-  const averageStars = rows.length ? (stars / rows.length).toFixed(1) : "0.0";
+  const averageStars = rows.length ? (stars / rows.length).toFixed(2) : "0.00";
+  const averageCommits = rows.length ? (commits / rows.length).toFixed(1) : "0.0";
+  const medianActiveDays = rows.length
+    ? rows
+        .map((row) => row.activeDays)
+        .sort((a, b) => a - b)[Math.floor(rows.length / 2)]
+    : 0;
+  const starred = rows.filter((row) => row.stars > 0);
+  const avgForkToStar = starred.length
+    ? (starred.reduce((sum, row) => sum + row.forks / row.stars, 0) / starred.length).toFixed(2)
+    : "0.00";
+  const impactShare = rows.length
+    ? Math.round((rows.filter((row) => row.impact === "High Impact" || row.impact === "Medium Impact").length / rows.length) * 100)
+    : 0;
+  const topTenShare = stars
+    ? Math.round((rows.slice().sort((a, b) => b.stars - a.stars).slice(0, 10).reduce((sum, row) => sum + row.stars, 0) / stars) * 100)
+    : 0;
 
   const items = [
     { label: "Repositories in View", value: rows.length },
     { label: "Owners in View", value: developers },
-    { label: "Stars in View", value: stars },
-    { label: "Forks in View", value: forks },
-    { label: "Commits in View", value: commits },
-    { label: "README Coverage", value: `${readmeCoverage}%` },
-    { label: "Average Stars per Repo", value: averageStars }
+    { label: "Average Stars per Repo", value: averageStars },
+    { label: "Average Commits per Repo", value: averageCommits },
+    { label: "README Adoption Rate", value: `${readmeCoverage}%` },
+    { label: "Average Fork-to-Star Ratio", value: avgForkToStar },
+    { label: "High + Medium Impact Share", value: `${impactShare}%` },
+    { label: "Top 10 Star Concentration", value: `${topTenShare}%` },
+    { label: "Median Active Days", value: medianActiveDays }
   ];
 
   const grid = document.getElementById("kpi-grid");
@@ -481,18 +499,27 @@ function renderInsightSummary(rows) {
     : 0;
   const longLived = rows.filter((row) => row.activeDays > 365).length;
 
+  const readmeRepos = rows.filter((row) => row.hasReadme === 1);
+  const noReadmeRepos = rows.filter((row) => row.hasReadme === 0);
+  const readmeStars = readmeRepos.length
+    ? (readmeRepos.reduce((sum, row) => sum + row.stars, 0) / readmeRepos.length).toFixed(2)
+    : "0.00";
+  const noReadmeStars = noReadmeRepos.length
+    ? (noReadmeRepos.reduce((sum, row) => sum + row.stars, 0) / noReadmeRepos.length).toFixed(2)
+    : "0.00";
+
   box.innerHTML = `
     <article class="insight-note">
       <span>Concentration</span>
       <strong>${topShare}% of visible stars come from the top 5 repositories in the current view.</strong>
     </article>
     <article class="insight-note">
-      <span>Language dominance</span>
-      <strong>${pythonShare}% of repositories in the current view use Python.</strong>
+      <span>Documentation effect</span>
+      <strong>Repositories with a README average ${readmeStars} stars in the current view, versus ${noReadmeStars} without one.</strong>
     </article>
     <article class="insight-note">
       <span>Lifecycle</span>
-      <strong>${formatNumber(longLived)} repositories in the current view stayed active for more than one year.</strong>
+      <strong>${formatNumber(longLived)} repositories in the current view stayed active for more than one year, while ${pythonShare}% of the current view is Python.</strong>
     </article>
   `;
 }

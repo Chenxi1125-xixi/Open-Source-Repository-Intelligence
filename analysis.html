@@ -35,21 +35,27 @@
           <p class="eyebrow">Analysis</p>
           <h1>Interactive views of repository behavior</h1>
           <p class="lede">
-            This page brings together the project's analytical layer: rankings,
-            distributions, lifecycle summaries, impact tiers, documentation
-            coverage, and community-health views.
+            This page brings together the project's analytical layer: engagement,
+            activity, quality, and concentration. The goal is not just to describe
+            repositories, but to explain which signals are most closely associated
+            with visibility and sustained adoption.
           </p>
         </div>
         <aside class="hero-panel">
           <div class="status-card">
             <span class="status-label">Data Scope</span>
-            <strong>Full cleaned repository dataset</strong>
+            <strong>14,644 repositories</strong>
             <p>All charts on this page are driven by the cleaned metadata file derived from the full repository source.</p>
           </div>
           <div class="status-card">
-            <span class="status-label">Filter Logic</span>
-            <strong>Language + impact tier</strong>
-            <p>Use the controls to isolate language-specific or visibility-specific subsets of repositories.</p>
+            <span class="status-label">Signal Strength</span>
+            <strong>Stars and forks are tightly linked</strong>
+            <p>Across the full dataset, stars and forks show a very strong relationship, while stars and commits are much weaker.</p>
+          </div>
+          <div class="status-card">
+            <span class="status-label">Documentation Effect</span>
+            <strong>README presence matters</strong>
+            <p>Repositories with a README materially outperform those without one on both visibility and development activity.</p>
           </div>
         </aside>
       </section>
@@ -69,16 +75,16 @@
 
         <div class="dashboard-intro">
           <article class="feature-card">
-            <h3>Distribution patterns</h3>
-            <p>Use the star, fork, impact, and language views to see whether repository attention is broad or highly concentrated.</p>
+            <h3>Engagement patterns</h3>
+            <p>Start with stars, forks, and concentration metrics to see whether attention is broadly distributed or captured by a small elite of repositories.</p>
           </article>
           <article class="feature-card">
-            <h3>Lifecycle patterns</h3>
-            <p>The lifecycle curve, active-days rankings, and commit summaries help compare early-stage repositories with longer-lived projects.</p>
+            <h3>Activity patterns</h3>
+            <p>Use commits, active-days measures, and the lifecycle curve to distinguish short-lived repositories from sustained, higher-maturity projects.</p>
           </article>
           <article class="feature-card">
-            <h3>Quality signals</h3>
-            <p>README coverage and community health views show whether documentation quality stays strong even when visibility is uneven.</p>
+            <h3>Quality patterns</h3>
+            <p>Compare README coverage and community-health signals to evaluate whether project packaging and maintainability align with visibility.</p>
           </article>
         </div>
 
@@ -99,6 +105,26 @@
         </div>
 
         <div class="kpi-grid" id="kpi-grid"></div>
+        <div class="feature-grid kpi-explainer-grid">
+          <article class="feature-card">
+            <h3>Why these KPIs</h3>
+            <p>
+              The KPI row emphasizes normalized quality and engagement metrics such as average stars per repository, README adoption, impact-tier share, and concentration rather than simple totals.
+            </p>
+          </article>
+          <article class="feature-card">
+            <h3>What to compare</h3>
+            <p>
+              Use filters to compare whether high-impact subsets also show stronger documentation, longer active lifespan, and better reuse signals through forks.
+            </p>
+          </article>
+          <article class="feature-card">
+            <h3>How to read the page</h3>
+            <p>
+              Move from KPIs to distributions, then to scatter and lifecycle views, and finish with the repository spotlight to inspect the projects driving the aggregate patterns.
+            </p>
+          </article>
+        </div>
         <div class="insight-summary" id="insight-summary"></div>
 
         <div class="viz-grid viz-grid-top">

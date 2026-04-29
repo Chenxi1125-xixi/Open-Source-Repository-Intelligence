@@ -35,9 +35,9 @@
           <p class="eyebrow">Findings</p>
           <h1>Main takeaways, challenges, and next steps</h1>
           <p class="lede">
-            This page condenses the final presentation into conclusions that are easier
-            to scan on the web: what the analysis found, what limited the data,
-            and how the schema could expand in future versions.
+            This page translates the project into portfolio-level analytical findings:
+            what drives visibility, which quality signals matter, where the dataset is
+            skewed, and what those patterns imply for open-source repository evaluation.
           </p>
         </div>
       </section>
@@ -46,33 +46,53 @@
     <main>
       <section class="section">
         <div class="section-heading">
-          <p class="eyebrow">Main Takeaways</p>
+          <p class="eyebrow">Key Insights</p>
           <h2>What the analysis suggests</h2>
         </div>
         <div class="feature-grid">
           <article class="feature-card">
-            <h3>Visibility is concentrated</h3>
-            <p>A small number of organization-backed repositories drive most of the stars and forks in the sample.</p>
+            <h3>Popularity behaves like a reuse signal</h3>
+            <p>Stars and forks are tightly aligned across the dataset, with a correlation of about <strong>0.94</strong>, which suggests repository visibility is strongly linked to downstream reuse and adoption.</p>
           </article>
           <article class="feature-card">
-            <h3>Python dominates the sample</h3>
-            <p>Most repositories in the current cleaned dataset use Python, which highlights both the shape of the source and the need for future language expansion.</p>
+            <h3>Commits alone do not explain visibility</h3>
+            <p>Stars and commits show only a weak relationship, so raw development volume is not enough to explain popularity without stronger distribution and discoverability signals.</p>
           </article>
           <article class="feature-card">
-            <h3>Most projects are early stage</h3>
-            <p>The impact-tier breakdown shows a long tail of repositories with low visibility and only a few standout projects.</p>
+            <h3>README presence is a meaningful differentiator</h3>
+            <p>Repositories with a README average roughly <strong>2.45 stars</strong> versus <strong>0.13</strong> without one, indicating documentation is associated with materially better discoverability and adoption.</p>
           </article>
           <article class="feature-card">
-            <h3>README usage is high</h3>
-            <p>README coverage remains strong even when engagement is low, suggesting documentation quality does not move in lockstep with stars.</p>
+            <h3>Maturity compounds impact</h3>
+            <p>Repositories active for more than <strong>3 years</strong> average about <strong>42 stars</strong>, compared with about <strong>0.22</strong> for repositories active 30 days or less, showing that sustained maintenance is strongly associated with visibility.</p>
           </article>
           <article class="feature-card">
-            <h3>Activity is concentrated</h3>
-            <p>The classroom sample showed IBM and AWS repositories accounting for much of the visible star, fork, and commit activity.</p>
+            <h3>The ecosystem is highly concentrated</h3>
+            <p>The top <strong>10 repositories account for about 64%</strong> of all stars and the top <strong>5 owners account for about 52%</strong>, which makes this a strongly winner-take-most distribution rather than a balanced ecosystem.</p>
           </article>
           <article class="feature-card">
-            <h3>Productivity is skewed</h3>
-            <p>In the sample used for the SQL presentation, 75% of developers exceeded the sample mean repository count, indicating a top-heavy output distribution.</p>
+            <h3>Most repositories remain low-visibility</h3>
+            <p>About <strong>84%</strong> of repositories fall into the <code>Early Stage</code> tier, so the dataset is analytically useful because it captures both a long tail of low-engagement projects and a small high-impact frontier.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-heading">
+          <p class="eyebrow">Summary</p>
+          <h2>Portfolio-ready interpretation</h2>
+        </div>
+        <div class="feature-stack">
+          <article class="feature-card">
+            <p>
+              The repository ecosystem in this dataset is highly skewed: a small number of projects capture most of the visibility, while the majority remain early-stage and low-engagement. Popularity is closely tied to reuse behavior, as reflected by the strong alignment between stars and forks, but it is only weakly associated with raw commit volume.
+            </p>
+            <p>
+              Documentation emerges as one of the clearest quality signals in the dataset. Repositories with a README materially outperform those without one on stars, forks, and commit activity, suggesting that discoverability and project packaging are important contributors to repository adoption. At the same time, repository maturity matters: projects with longer active lifespans are substantially more visible than newly created or short-lived repositories.
+            </p>
+            <p>
+              Taken together, the analysis shows that open-source impact is not explained by coding activity alone. Visibility appears to be shaped by a combination of documentation quality, sustained maintenance, and downstream reuse, which makes these dimensions more useful for portfolio-level evaluation than simple popularity counts.
+            </p>
           </article>
         </div>
       </section>
